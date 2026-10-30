@@ -1,0 +1,23 @@
+name: Build independent BTRFS.so and verify interface
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  btrfs:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build native BTRFS.so
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --parallel 2
+      - name: Validate driver
+        run: |
+          ctest --test-dir build --output-on-failure
+          test -f build/BTRFS.so
+          nm -D build/BTRFS.so | grep -F infiltrator_filesystem_btrfs_v1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BTRFS.so
+          path: build/BTRFS.so
