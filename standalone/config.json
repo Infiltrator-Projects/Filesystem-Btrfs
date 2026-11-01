@@ -1,0 +1,7 @@
+{
+  "repository": "Filesystem-Btrfs",
+  "module": "BTRFS.so",
+  "pdf": "docs/Btrfs.pdf",
+  "abi": "infiltrator_filesystem_btrfs_v1",
+  "build_system": "cmake"
+}
