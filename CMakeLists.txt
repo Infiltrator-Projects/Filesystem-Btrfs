@@ -40,4 +40,4 @@ endif()
 install(TARGETS btrfs-driver LIBRARY DESTINATION /System/Filesystems)
 # Install only this filesystem's illustrated PDF beside its native shared object.
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/Btrfs.pdf"
-        DESTINATION /System/Resources/Documentation/Filesystem-Btrfs)
+        DESTINATION /System/Resources/Documentation RENAME Filesystem-Btrfs.pdf)
