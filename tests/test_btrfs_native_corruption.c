@@ -49,10 +49,11 @@ int main(void)
     CHECK(btrfs_writer_preflight(image, error, sizeof(error)) != 0);
     CHECK(btrfs_verify_layout(image, false, 0, error, sizeof(error)) != 0);
 
-    CHECK(pwrite(stage_fd, "UNCHANGED", sizeof(marker)) ==
+    CHECK(pwrite(stage_fd, "UNCHANGED", sizeof(marker), 0) ==
           (ssize_t)sizeof(marker));
     CHECK(btrfs_build_stage(image, stage, false, 0, false,
                             &commit_bytes, error, sizeof(error)) != 0);
+    CHECK(access(stage, F_OK) == 0);
     CHECK(pread(stage_fd, marker, sizeof(marker), 0) ==
           (ssize_t)sizeof(marker));
     CHECK(memcmp(marker, "UNCHANGED", sizeof(marker)) == 0);
