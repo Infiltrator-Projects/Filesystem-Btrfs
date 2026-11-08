@@ -36,6 +36,17 @@ if(BUILD_TESTING)
  target_include_directories(btrfs-module-test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
  target_link_libraries(btrfs-module-test PRIVATE btrfs-driver)
  add_test(NAME btrfs-module-interface COMMAND btrfs-module-test)
+ # Exercise failure-safe native media handling from the same released .so.
+ add_executable(btrfs-native-corruption-test tests/test_btrfs_native_corruption.c)
+ target_include_directories(btrfs-native-corruption-test PRIVATE
+   "${CMAKE_CURRENT_SOURCE_DIR}/native")
+ target_compile_definitions(btrfs-native-corruption-test PRIVATE
+   _POSIX_C_SOURCE=200809L)
+ target_compile_options(btrfs-native-corruption-test PRIVATE
+   -Wall -Wextra -Wpedantic -Werror)
+ target_link_libraries(btrfs-native-corruption-test PRIVATE btrfs-driver)
+ add_test(NAME btrfs-damaged-media-fail-closed
+   COMMAND btrfs-native-corruption-test)
 endif()
 install(TARGETS btrfs-driver LIBRARY DESTINATION /System/Filesystems)
 # Install only this filesystem's illustrated PDF beside its native shared object.
