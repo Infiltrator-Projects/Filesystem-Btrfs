@@ -39,6 +39,8 @@ typedef struct {
     bool fragmentation_available;
 } BtrfsAnalysis;
 
+/* CRC32C verifier shared by native analysis and the Common V2 adapter. */
+bool btrfs_checksum_valid(const uint8_t *block, size_t length);
 bool btrfs_probe(const char *path);
 int btrfs_analyse(const char *path, BtrfsAnalysis *analysis,
                   char *error, size_t error_size);

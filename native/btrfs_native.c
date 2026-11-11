@@ -84,7 +84,7 @@ static uint32_t btrfs_crc32c(const uint8_t *data, size_t length)
     return ~crc;
 }
 
-static bool btrfs_checksum_valid(const uint8_t *block, size_t length)
+bool btrfs_checksum_valid(const uint8_t *block, size_t length)
 {
     if (length < 32U)
         return false;

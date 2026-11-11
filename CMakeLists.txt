@@ -9,14 +9,14 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(INFILTRATR_COMMON_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(INFILTRATR_COMMON_BUILD_SHARED OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(infiltratr_common GIT_REPOSITORY https://github.com/Infiltrator-Projects/Libraries.git
- GIT_TAG c76ec95ef66fc728df6a906ad75a6a4dd63b419b)
+ GIT_TAG 5b5fb95988c8d0b53ed29fdecfb0b70274182fd6)
 FetchContent_MakeAvailable(infiltratr_common)
 # Common is a link-time dependency; its development files must not be installed
 # by this standalone filesystem package.
 set_property(DIRECTORY "${infiltratr_common_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_ALL TRUE)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/version.h" "#define LD_VERSION \"1.0.0\"\n")
 add_library(btrfs-driver SHARED native/btrfs_native.c native/btrfs_worker.c
- compat/legacy_services.c module/btrfs_module.c
+ compat/legacy_services.c module/btrfs_module.c module/btrfs_v2_probe.c
  fixtures/btrfs_codec.c module/btrfs_fixture_bridge.c)
 set_source_files_properties(native/btrfs_worker.c PROPERTIES
  COMPILE_DEFINITIONS "main=ifs_btrfs_worker_main")
@@ -29,13 +29,18 @@ target_link_options(btrfs-driver PRIVATE -Wl,-z,defs)
 target_include_directories(btrfs-driver PRIVATE
  "${CMAKE_CURRENT_SOURCE_DIR}/native" "${CMAKE_CURRENT_SOURCE_DIR}/compat"
  "${CMAKE_CURRENT_SOURCE_DIR}/include" "${CMAKE_CURRENT_SOURCE_DIR}/fixtures/include"
- "${CMAKE_CURRENT_BINARY_DIR}")
+ "${CMAKE_CURRENT_BINARY_DIR}" "${infiltratr_common_SOURCE_DIR}/include")
 target_link_libraries(btrfs-driver PRIVATE InfiltratrCommon::Common OpenSSL::Crypto)
 if(BUILD_TESTING)
  add_executable(btrfs-module-test tests/test_module.c)
  target_include_directories(btrfs-module-test PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/include")
  target_link_libraries(btrfs-module-test PRIVATE btrfs-driver)
  add_test(NAME btrfs-module-interface COMMAND btrfs-module-test)
+ add_executable(btrfs-v2-probe-test tests/test_btrfs_v2_probe.c)
+ target_include_directories(btrfs-v2-probe-test PRIVATE "${infiltratr_common_SOURCE_DIR}/include")
+ target_link_libraries(btrfs-v2-probe-test PRIVATE btrfs-driver InfiltratrCommon::Common)
+ target_compile_options(btrfs-v2-probe-test PRIVATE -Wall -Wextra -Wpedantic -Werror)
+ add_test(NAME btrfs-common-v2-probe COMMAND btrfs-v2-probe-test)
  # Exercise failure-safe native media handling from the same released .so.
  add_executable(btrfs-native-corruption-test tests/test_btrfs_native_corruption.c)
  target_include_directories(btrfs-native-corruption-test PRIVATE
