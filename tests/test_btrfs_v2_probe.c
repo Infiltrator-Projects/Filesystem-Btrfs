@@ -29,7 +29,12 @@ int main(void) {
     const IfsFsModuleApiV2 *api=infiltrator_filesystem_api_v2();
     CHECK(ifs_fs_api_v2_valid(api,"btrfs"));
     const IfsFsCoreOpsV2 *core=(const void *)ifs_fs_group_v2(api,IFS_FS_GROUP_CORE);
-    CHECK(core && core->probe && !core->mount && !core->write);
+    const IfsFsVolumeOpsV2 *vol=(const void *)
+        ifs_fs_group_v2(api,IFS_FS_GROUP_VOLUME);
+    CHECK(core && core->probe && core->mount && core->unmount &&
+          vol && vol->query && !core->write);
+    CHECK(core->header.capabilities==(IFS_FS_CORE_PROBE|IFS_FS_CORE_MOUNT));
+    CHECK(vol->header.capabilities==IFS_FS_VOLUME_QUERY);
     IfsFsHostRuntimeV2 h={0};
     h.abi_version=IFS_FS_HOST_ABI_V2;h.structure_bytes=sizeof(h);
     h.capabilities=IFS_FS_HOST_READ_ONLY;h.volume_bytes=sizeof(disk);
@@ -46,6 +51,25 @@ int main(void) {
     le32(s+144u,4096u);le32(s+148u,4096u);
     le32(s,crc32c(s+32u,4096u-32u));
     CHECK(core->probe(&h,&variant)==IFS_FS_OK && variant==1u);
+    IfsFsVolumeInfoV2 info={.structure_bytes=sizeof(info)};
+    void *mounted=NULL,*old=NULL;
+    CHECK(core->mount(&h,&mounted,&info)==IFS_FS_OK && mounted);
+    CHECK(info.variant==1u && info.block_bytes==4096u &&
+          info.total_bytes==sizeof(disk) &&
+          info.free_bytes==sizeof(disk)-32768u);
+    CHECK(core->mount(&h,&old,&info)==IFS_FS_BUSY && !old);
+    info.structure_bytes=sizeof(info);
+    CHECK(vol->query(mounted,&info)==IFS_FS_OK);
+    old=mounted;
+    CHECK(core->unmount(mounted)==IFS_FS_OK);
+    CHECK(core->unmount(old)==IFS_FS_INVALID);
+    CHECK(vol->query(old,&info)==IFS_FS_INVALID);
+    le64(s+120u,sizeof(disk)+1u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    info.structure_bytes=sizeof(info);
+    CHECK(core->mount(&h,&mounted,&info)==IFS_FS_CORRUPT && !mounted);
+    le64(s+120u,32768u);
+    le32(s,crc32c(s+32u,4096u-32u));
     s[200u]^=1u;variant=0;
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0);
     s[200u]^=1u;h.maximum_transfer_bytes=0;
