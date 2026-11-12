@@ -15,7 +15,7 @@ InfiltratorOS calls `--system-package-mode` and decides which outputs need updat
 
 BTRFS.so now supports canonical Common V2 CORE identification through
 bounded host I/O and the same CRC32C verifier used by the native engine.
-The existing V1 path-based analyser and controlled writer remain until
+The existing path-based analyser and controlled writer remain until
 V2 allocation-tree traversal, namespace and mutation operations are
 fully qualified. Probe-only Common V2 must not be represented as
 completed mount, file I/O, defragmentation or repair.
