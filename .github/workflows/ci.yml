@@ -17,7 +17,7 @@ jobs:
           ctest --test-dir build --output-on-failure
           test -f build/BTRFS.so
           nm -D --defined-only build/BTRFS.so | grep -F infiltrator_filesystem_api_v2
-          nm -D --defined-only build/BTRFS.so | grep -F infiltrator_filesystem_btrfs_v1
+          sh tests/check_v2_exports.sh build/BTRFS.so
       - uses: actions/upload-artifact@v4
         with:
           name: BTRFS.so
