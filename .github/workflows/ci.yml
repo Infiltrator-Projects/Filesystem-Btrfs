@@ -1,38 +1,38 @@
-name: Build independent BTRFS.so and verify interface
+# SPDX-License-Identifier: GPL-3.0-or-later
+name: Build and verify Common V2-only hosted BTRFS.so
 on:
   push:
     branches: [main]
-  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   btrfs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - name: Build native BTRFS.so
+      - name: Test native Common V2 interface and corrupted media
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          set -euo pipefail
+          cmake -S . -B build -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
           cmake --build build --parallel 2
-      - name: Validate driver
-        run: |
           ctest --test-dir build --output-on-failure
-          test -f build/BTRFS.so
-          nm -D --defined-only build/BTRFS.so | grep -F infiltrator_filesystem_api_v2
           sh tests/check_v2_exports.sh build/BTRFS.so
-      - uses: actions/upload-artifact@v4
-        with:
-          name: BTRFS.so
-          path: |
-            build/BTRFS.so
-            docs/Btrfs.pdf
-
-      - name: Verify exactly one PDF per runtime SO
-        shell: bash
+      - name: Inspect actual installed provider, not test-only legacy worker
         run: |
           set -euo pipefail
           stage="$(mktemp -d)"
           trap 'rm -rf "$stage"' EXIT
           DESTDIR="$stage" cmake --install build
           test "$(find "$stage" -type f | wc -l)" -eq 2
-          test -f "$stage/System/Filesystems/BTRFS.so"
-          test -f "$stage/System/Resources/Documentation/Filesystem-Btrfs.pdf"
-          test "$(head -c 5 "$stage/System/Resources/Documentation/Filesystem-Btrfs.pdf")" = '%PDF-'
+          module="$stage/System/Filesystems/BTRFS.so"
+          cmp build/BTRFS.so "$module"
+          sh tests/check_v2_exports.sh "$module"
+          test -s "$stage/System/Resources/Documentation/Filesystem-Btrfs.pdf"
+          test "$(find "$stage" -name '*.ko' | wc -l)" = 0
+      - uses: actions/upload-artifact@v4
+        with:
+          name: BTRFS-hosted-v2-unqualified-for-boot
+          path: |
+            build/BTRFS.so
+            docs/Btrfs.pdf

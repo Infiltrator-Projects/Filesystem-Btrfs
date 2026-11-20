@@ -1,21 +1,24 @@
 # Filesystem-Btrfs
-Independent filesystem implementation for InfiltratorOS, using the shared Common ABI.
 
-## Installer files
+The production filesystem provider is installed as
+`/System/Filesystems/BTRFS.so`, with its manual at
+`/System/Resources/Documentation/Filesystem-Btrfs.pdf`.
 
-- `/System/Filesystems/BTRFS.so`
-- `/System/Resources/Documentation/Filesystem-Btrfs.pdf`
-- `/System/Kernel/Filesystems/btrfs.ko`
+## Actual Common V2 support
 
-The published Debian package installs these three regular files. A manual native RUN compiles the shared object and Linux adapter locally, generates the PDF, and replaces all three files. It uses the running kernel headers by default. Use `--kernel-build DIRECTORY` for a prepared kernel build with `Module.symvers`. The kernel module is stored for manual use.
+The installed ELF exposes the Common V2 entry point only. It presently
+supports CRC32C-checked on-disk superblock probing, metadata-only read-only
+mount sessions and volume information through a partition-relative host.
 
-InfiltratorOS calls `--system-package-mode` and decides which outputs need updating. Its worker builds a missing or older SO, repairs the PDF independently, and stores the matching released kernel module when available. Use `--build-only --output DIRECTORY` to build a Debian package.
+**This version is NOT BOOT-compatible.** It does not implement Btrfs
+chunk/root/FS-tree traversal, Common V2 pathname lookup, directory entries
+or file reads. Its mount operation is a metadata session, not a working
+read-only filesystem namespace. The BOOT validator must not accept this
+hosted-only module as a boot provider.
 
-## Common V2 migration (1.0.8)
-
-BTRFS.so now supports canonical Common V2 CORE identification through
-bounded host I/O and the same CRC32C verifier used by the native engine.
-The existing path-based analyser and controlled writer remain until
-V2 allocation-tree traversal, namespace and mutation operations are
-fully qualified. Probe-only Common V2 must not be represented as
-completed mount, file I/O, defragmentation or repair.
+The original native Btrfs analyser, controlled mutation engine, worker,
+fixtures and Linux-specific source remain in the repository. Legacy worker
+and fixture callbacks are confined to **non-installed regression tests**.
+No Linux `.ko` is built or shipped as a fallback. Source-embedded `.run`
+and Debian artifacts undergo hosted qualification, but publication is held
+until genuine BOOT and OVMF acceptance requirements are met.
