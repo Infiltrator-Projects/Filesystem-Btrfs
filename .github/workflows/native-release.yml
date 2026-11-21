@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-# Hosted V2 metadata-only module: no release publishing before production
-# BOOT validator and OVMF read qualification, including real file contents.
-name: Qualify BTRFS hosted V2 package without kernel fallback
+# Verify both packaged Common V2 namespace readers. Release qualification
+# additionally requires the rebuilt BOOT loader and validator.
+name: Qualify packaged hosted and freestanding Btrfs readers
 on:
   push:
     branches: [main]
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential binutils cmake git pkg-config libssl-dev libsqlite3-dev dpkg-dev btrfs-progs
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential binutils cmake git pkg-config libssl-dev libsqlite3-dev dpkg-dev btrfs-progs cpio busybox-static
       - name: Build and inspect portable DEB and source-embedded RUN
         run: |
           set -euo pipefail
@@ -46,6 +46,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          files="$RUNNER_TEMP/btrfs-boot-files"
+          bash tests/boot-file-fixtures.sh "$files"
+          export BTRFS_TEST_KERNEL="$files/vmlinuz" BTRFS_TEST_INITRAMFS="$files/initramfs"
           check="$RUNNER_TEMP/btrfs-media-check"
           cmake -S . -B "$check" -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
           cmake --build "$check" --target btrfs-readonly-media btrfs-firmware --parallel 2
