@@ -46,7 +46,7 @@ int main(void) {
     uint8_t *s=disk+65536u;
     memcpy(s+64u,"_BHRfS_M",8u);
     for(unsigned i=0u;i<16u;++i)s[32u+i]=(uint8_t)(i+1u);
-    le64(s+48u,65536u);le64(s+80u,4096u);
+    le64(s+48u,65536u);le64(s+72u,1u);le64(s+80u,4096u);
     le64(s+88u,8192u);le64(s+112u,sizeof(disk));
     le64(s+120u,32768u);le64(s+136u,1u);
     le32(s+144u,4096u);le32(s+148u,4096u);
@@ -90,6 +90,10 @@ int main(void) {
     variant=0u;
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
     memcpy(s+32u,saved_fsid,sizeof(saved_fsid));
+    le64(s+72u,0u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+    le64(s+72u,1u);
     le64(s+80u,4097u);
     le32(s,crc32c(s+32u,4096u-32u));
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);

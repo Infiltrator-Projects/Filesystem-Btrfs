@@ -61,7 +61,8 @@ static int inspect(const IfsFsHostRuntimeV2 *h,uint32_t *variant,
     if(!btrfs_checksum_valid(raw,4096u) ||
        le16(raw+196u)!=0u || le64(raw+48u)!=where ||
        !fsid_nonzero || !total || total>h->volume_bytes || used>total ||
-       le64(raw+136u)!=1u || !root || !chunk_root ||
+       le64(raw+136u)!=1u || !le64(raw+72u) ||
+       !root || !chunk_root ||
        sectorsize<4096u ||
        sectorsize>65536u || (sectorsize&(sectorsize-1u)) ||
        nodesize<sectorsize || nodesize>65536u ||
