@@ -116,7 +116,7 @@ int main(int argc, char **argv)
         uint8_t byte;
         CHECK(core->read(mount, "/boot/vmlinuz", 0, &byte, 1) == IFS_FS_CORRUPT);
     } else {
-        CHECK(!strcmp(argv[5], "clean"));
+        CHECK(!strcmp(argv[5], "clean") || !strcmp(argv[5], "single-bad-tree"));
         CHECK(core->mount(&host, &second, &info) == IFS_FS_OK && second && second != mount);
         CHECK(core->unmount(second) == IFS_FS_OK && vol->query(second, &info) == IFS_FS_INVALID);
         char name[256];

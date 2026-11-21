@@ -126,62 +126,93 @@ static int add_chunk(BtrfsReader *r, Key key, const uint8_t *p, uint32_t size, v
     r->map[r->mappings++] = m;
     return IFS_FS_OK;
 }
-static int logical_read(BtrfsReader *r, uint64_t at, void *out, uint32_t size, uint64_t kind)
+/* DUP protects complete Btrfs tree blocks, not just raw reads.
+ * Validate a candidate's checksum, identity, keys, and complete slot table
+ * before accepting it; only then can the alternate physical replica be used.
+ * Never fall back to an unrelated chunk or an unchecked metadata copy. */
+static int logical_read_copy(BtrfsReader *r, uint64_t at, void *out,
+                             uint32_t size, uint64_t kind, unsigned copy)
 {
     for (size_t i = 0; i < r->mappings; ++i) {
         const Mapping *m = &r->map[i];
         if (at < m->logical || at - m->logical >= m->length)
             continue;
-        uint64_t delta = at - m->logical;
+        const uint64_t delta = at - m->logical;
         if (!(m->flags & kind) || size > m->length - delta)
             return IFS_FS_CORRUPT;
-        return ifs_fs_host_read_bytes_v2(&r->host, m->physical[0] + delta, out, size);
+        if (copy >= m->stripes)
+            return IFS_FS_NOT_FOUND;
+        return ifs_fs_host_read_bytes_v2(
+            &r->host, m->physical[copy] + delta, out, size);
     }
     return IFS_FS_CORRUPT;
 }
-/* Check the complete slot table before exposing any record. Leaves pack
- * values backwards from the end. Parent keys bound every child subtree. */
-static int load_node(BtrfsReader *r, Tree t, const Key *first, const Key *limit, uint8_t **out,
-                     uint32_t *count)
+static int logical_read(BtrfsReader *r, uint64_t at, void *out, uint32_t size,
+                        uint64_t kind)
 {
-    if (!t.logical || t.logical % r->sector || t.level > 8 || !t.generation ||
-        t.generation > r->generation)
-        return IFS_FS_CORRUPT;
-    uint8_t *b = allocate(r, r->node);
-    if (!b)
-        return IFS_FS_NO_MEMORY;
-    int rc = logical_read(r, t.logical, b, r->node, t.owner == 3 ? 2 : 4);
-    if (rc != IFS_FS_OK) {
-        release(r, b);
-        return rc;
-    }
-    uint32_t n = le32(b + 96), stride = t.level ? NODE_SLOT : LEAF_SLOT;
+    return logical_read_copy(r, at, out, size, kind, 0u);
+}
+
+/* Reject damaged metadata before traversing any key or returning a pointer.
+ * The same full verification is required independently for each DUP copy. */
+static int node_valid(BtrfsReader *r, Tree t, const Key *first,
+                      const Key *limit, const uint8_t *b, uint32_t *count)
+{
+    const uint32_t n = le32(b + 96);
+    const uint32_t stride = t.level ? NODE_SLOT : LEAF_SLOT;
     if (!btrfs_checksum_valid(b, r->node) || memcmp(b + 32, r->fsid, 16) ||
-        le64(b + 48) != t.logical || le64(b + 80) != t.generation || le64(b + 88) != t.owner ||
-        b[100] != t.level || n > (r->node - TREE_HEADER) / stride || (!n && (t.level || first)))
-        goto corrupt;
+        le64(b + 48) != t.logical || le64(b + 80) != t.generation ||
+        le64(b + 88) != t.owner || b[100] != t.level ||
+        n > (r->node - TREE_HEADER) / stride ||
+        (!n && (t.level || first)))
+        return IFS_FS_CORRUPT;
     uint32_t end = r->node - TREE_HEADER;
     Key prev = {0};
     for (uint32_t i = 0; i < n; ++i) {
         const uint8_t *slot = b + TREE_HEADER + i * stride;
-        Key k = disk_key(slot);
-        if ((!i && first && order(k, *first)) || (i && order(prev, k) >= 0) ||
+        const Key k = disk_key(slot);
+        if ((!i && first && order(k, *first)) ||
+            (i && order(prev, k) >= 0) ||
             (limit && order(k, *limit) >= 0))
-            goto corrupt;
+            return IFS_FS_CORRUPT;
         if (!t.level) {
-            uint32_t off = le32(slot + 17), size = le32(slot + 21);
+            const uint32_t off = le32(slot + 17);
+            const uint32_t size = le32(slot + 21);
             if (off < n * stride || off > end || size != end - off)
-                goto corrupt;
+                return IFS_FS_CORRUPT;
             end = off;
         }
         prev = k;
     }
-    *out = b;
     *count = n;
     return IFS_FS_OK;
-corrupt:
+}
+static int load_node(BtrfsReader *r, Tree t, const Key *first,
+                     const Key *limit, uint8_t **out, uint32_t *count)
+{
+    if (!t.logical || t.logical % r->sector || t.level > 8 ||
+        !t.generation || t.generation > r->generation)
+        return IFS_FS_CORRUPT;
+    uint8_t *b = allocate(r, r->node);
+    if (!b)
+        return IFS_FS_NO_MEMORY;
+    int last = IFS_FS_CORRUPT;
+    for (unsigned copy = 0u; copy < 2u; ++copy) {
+        int rc = logical_read_copy(r, t.logical, b, r->node,
+                                   t.owner == 3 ? 2u : 4u, copy);
+        if (rc == IFS_FS_NOT_FOUND)
+            break; /* SINGLE metadata has no second physical copy. */
+        if (rc == IFS_FS_OK) {
+            rc = node_valid(r, t, first, limit, b, count);
+            if (rc == IFS_FS_OK) {
+                *out = b;
+                return IFS_FS_OK;
+            }
+        }
+        last = rc;
+    }
     release(r, b);
-    return IFS_FS_CORRUPT;
+    return last;
 }
 /* floor selects the last key <= high (checksum items cover ranges); otherwise
  * visit every record in the closed interval [low, high], in disk-key order. */

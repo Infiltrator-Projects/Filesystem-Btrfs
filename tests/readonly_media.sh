@@ -35,6 +35,7 @@ fi
 readelf -rW embedded.so > relocations
 if grep 'R_X86_64_' relocations | grep -v 'R_X86_64_RELATIVE' >/dev/null; then exit 1; fi
 cp --sparse=always --reflink=auto clean.img bad-tree.img
+cp --sparse=always --reflink=auto clean.img single-bad-tree.img
 cp --sparse=always --reflink=auto clean.img bad-data.img
 # Locate the current tree by its on-disk FSID and logical address, including
 # both DUP replicas. Locate file data independently using whole-sector bytes.
@@ -52,6 +53,12 @@ with open('bad-tree.img','r+b') as f, mmap.mmap(f.fileno(),0) as disk:
             hits += 1
         i = disk.find(needle,i+len(needle))
     assert hits == 2, hits
+with open('single-bad-tree.img','r+b') as f, mmap.mmap(f.fileno(),0) as disk:
+    sb = disk[65536:65536+4096]
+    needle = sb[32:48] + sb[80:88]
+    i = disk.find(needle)
+    assert i >= 32 and i % 4096 == 32
+    disk[i-32] ^= 1  # Damage one DUP metadata copy, leave its mirror intact.
 with open('bad-data.img','r+b') as f, mmap.mmap(f.fileno(),0) as disk:
     with open('source/boot/vmlinuz','rb') as kernel:
         needle = kernel.read(4096)
@@ -60,11 +67,12 @@ with open('bad-data.img','r+b') as f, mmap.mmap(f.fileno(),0) as disk:
     assert i >= 0 and i % 4096 == 0 and disk.find(needle,i+1) == -1
     disk[i+4079] ^= 1  # A one-byte read at offset zero must catch this.
 PY
-sha256sum clean.img bad-tree.img bad-data.img > images.sha256
+sha256sum clean.img bad-tree.img single-bad-tree.img bad-data.img > images.sha256
 for elf in "$module" "$PWD/embedded.so"; do
     "$check" "$elf" clean.img source 512 clean
     "$check" "$elf" clean.img source 4096 clean
     "$check" "$elf" bad-tree.img source 4096 bad-tree
+    "$check" "$elf" single-bad-tree.img source 4096 single-bad-tree
     "$check" "$elf" bad-data.img source 512 bad-data
 done
 sha256sum -c images.sha256
