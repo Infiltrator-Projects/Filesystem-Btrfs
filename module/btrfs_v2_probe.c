@@ -53,15 +53,21 @@ static int inspect(const IfsFsHostRuntimeV2 *h,uint32_t *variant,
         rc=IFS_FS_NOT_FOUND;goto done;
     }
     const uint64_t total=le64(raw+112u),used=le64(raw+120u);
+    const uint64_t root=le64(raw+80u),chunk_root=le64(raw+88u);
+    const uint64_t log_root=le64(raw+96u);
     const uint32_t sectorsize=le32(raw+144u),nodesize=le32(raw+148u);
+    uint8_t fsid_nonzero=0u;
+    for(unsigned i=0u;i<16u;++i)fsid_nonzero|=raw[32u+i];
     if(!btrfs_checksum_valid(raw,4096u) ||
        le16(raw+196u)!=0u || le64(raw+48u)!=where ||
-       !total || total>h->volume_bytes || used>total ||
-       le64(raw+136u)!=1u || !le64(raw+80u) ||
-       !le64(raw+88u) || sectorsize<4096u ||
+       !fsid_nonzero || !total || total>h->volume_bytes || used>total ||
+       le64(raw+136u)!=1u || !root || !chunk_root ||
+       sectorsize<4096u ||
        sectorsize>65536u || (sectorsize&(sectorsize-1u)) ||
        nodesize<sectorsize || nodesize>65536u ||
        (nodesize&(nodesize-1u)) ||
+       (root%nodesize) || (chunk_root%nodesize) ||
+       (log_root && (log_root%nodesize)) ||
        (total%sectorsize) || (used%sectorsize) ||
        raw[198u]>8u || raw[199u]>8u)
         goto done;

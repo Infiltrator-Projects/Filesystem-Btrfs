@@ -45,6 +45,7 @@ int main(void) {
     CHECK(core->probe(&h,&variant)==IFS_FS_NOT_FOUND);
     uint8_t *s=disk+65536u;
     memcpy(s+64u,"_BHRfS_M",8u);
+    for(unsigned i=0u;i<16u;++i)s[32u+i]=(uint8_t)(i+1u);
     le64(s+48u,65536u);le64(s+80u,4096u);
     le64(s+88u,8192u);le64(s+112u,sizeof(disk));
     le64(s+120u,32768u);le64(s+136u,1u);
@@ -80,6 +81,23 @@ int main(void) {
     s[200u]^=1u;variant=0;
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0);
     s[200u]^=1u;
+    /* Checksum-valid fabricated identity cannot describe a real Btrfs
+     * volume even when all other geometry is internally consistent. */
+    uint8_t saved_fsid[16];
+    memcpy(saved_fsid,s+32u,sizeof(saved_fsid));
+    memset(s+32u,0u,sizeof(saved_fsid));
+    le32(s,crc32c(s+32u,4096u-32u));
+    variant=0u;
+    CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+    memcpy(s+32u,saved_fsid,sizeof(saved_fsid));
+    le64(s+80u,4097u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+    le64(s+80u,4096u);
+    le64(s+88u,8193u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+    le64(s+88u,8192u);
     /* Checksum-valid metadata must still fail for impossible geometry. */
     le32(s+144u,131072u);le32(s+148u,131072u);
     le32(s,crc32c(s+32u,4096u-32u));

@@ -33,3 +33,10 @@ negative cases as well as the existing corruption and read-only session tests.
 This is **not** a freestanding namespace or BOOT compatibility claim:
 STAT/LIST/READ, chunk mapping, the filesystem tree, an embedded firmware
 reader, actual BOOT validator and OVMF qualification are still outstanding.
+
+## 21 November 2026 — reject impossible root-tree identities
+
+The actual Common V2 checksum-valid probe rejects a zero filesystem UUID
+and root/chunk tree logical addresses that are not aligned to the recorded
+node size. The native superblock validation remains read-only and does not
+claim working tree traversal, file contents or BOOT qualification.
