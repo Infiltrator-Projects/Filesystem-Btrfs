@@ -18,11 +18,25 @@ set_property(DIRECTORY "${infiltratr_common_SOURCE_DIR}" PROPERTY EXCLUDE_FROM_A
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/version.h"
   "#define LD_VERSION \"${PROJECT_VERSION}\"\n")
 
-# Keep only the actual native checksum engine and host-owned Common V2
-# operations in the installed provider. Native legacy path workers and
-# fixture callbacks are compiled exclusively as non-installed test support.
-add_library(btrfs-driver SHARED
-  native/btrfs_native.c module/btrfs_v2_probe.c)
+# Compile the same bounded on-disk reader in both execution profiles. The
+# child build excludes hosted linker, instrumentation and startup objects.
+set(BTRFS_FIRMWARE_ELF "${CMAKE_CURRENT_BINARY_DIR}/firmware/BTRFS.so")
+add_custom_command(OUTPUT "${BTRFS_FIRMWARE_ELF}"
+  COMMAND "${CMAKE_COMMAND}" -S "${CMAKE_CURRENT_SOURCE_DIR}/module/firmware"
+    -B "${CMAKE_CURRENT_BINARY_DIR}/firmware" -DCMAKE_BUILD_TYPE=Release
+    "-DCMAKE_C_COMPILER=${CMAKE_C_COMPILER}" "-DCOMMON_INCLUDE_DIR=${infiltratr_common_SOURCE_DIR}/include"
+  COMMAND "${CMAKE_COMMAND}" --build "${CMAKE_CURRENT_BINARY_DIR}/firmware"
+  DEPENDS module/firmware/CMakeLists.txt module/firmware/runtime.c module/btrfs_v2_probe.c
+    native/btrfs_reader.c native/btrfs_reader.h native/btrfs_checksum.c
+    "${infiltratr_common_SOURCE_DIR}/include/infiltratr/filesystem_module_v2.h"
+  VERBATIM)
+add_custom_target(btrfs-firmware DEPENDS "${BTRFS_FIRMWARE_ELF}")
+add_library(btrfs-driver SHARED native/btrfs_reader.c native/btrfs_checksum.c module/btrfs_v2_probe.c)
+add_dependencies(btrfs-driver btrfs-firmware)
+set_property(TARGET btrfs-driver APPEND PROPERTY LINK_DEPENDS "${BTRFS_FIRMWARE_ELF}")
+add_custom_command(TARGET btrfs-driver POST_BUILD
+  COMMAND "${CMAKE_OBJCOPY}" --add-section ".infiltrator_boot=${BTRFS_FIRMWARE_ELF}"
+    --set-section-flags .infiltrator_boot=readonly "$<TARGET_FILE:btrfs-driver>" VERBATIM)
 set_target_properties(btrfs-driver PROPERTIES
   PREFIX "" OUTPUT_NAME "BTRFS" SUFFIX ".so"
   C_VISIBILITY_PRESET hidden)
@@ -40,7 +54,7 @@ target_link_libraries(btrfs-driver PRIVATE InfiltratrCommon::Common OpenSSL::Cry
 
 if(BUILD_TESTING)
   add_library(btrfs-legacy-test-support SHARED
-    native/btrfs_native.c native/btrfs_worker.c
+    native/btrfs_native.c native/btrfs_checksum.c native/btrfs_worker.c
     compat/legacy_services.c module/btrfs_module.c
     fixtures/btrfs_codec.c module/btrfs_fixture_bridge.c)
   set_source_files_properties(native/btrfs_worker.c PROPERTIES
@@ -61,6 +75,13 @@ if(BUILD_TESTING)
   target_link_libraries(btrfs-legacy-test-support PRIVATE
     InfiltratrCommon::Common OpenSSL::Crypto)
 
+  add_executable(btrfs-readonly-media tests/test_readonly_media.c)
+  target_include_directories(btrfs-readonly-media PRIVATE "${infiltratr_common_SOURCE_DIR}/include")
+  target_compile_options(btrfs-readonly-media PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  target_link_libraries(btrfs-readonly-media PRIVATE ${CMAKE_DL_LIBS})
+  add_test(NAME btrfs-carrier-and-firmware-real-media
+    COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/tests/readonly_media.sh"
+      "$<TARGET_FILE:btrfs-readonly-media>" "$<TARGET_FILE:btrfs-driver>" "${BTRFS_FIRMWARE_ELF}")
   add_executable(btrfs-module-test tests/test_module.c)
   target_include_directories(btrfs-module-test PRIVATE
     "${infiltratr_common_SOURCE_DIR}/include")

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-name: Build and verify Common V2-only hosted BTRFS.so
+name: Build and verify hosted and freestanding BTRFS.so
 on:
   push:
     branches: [main]
@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+      - name: Install the independent Btrfs image builder
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends btrfs-progs
       - name: Test native Common V2 interface and corrupted media
         run: |
           set -euo pipefail

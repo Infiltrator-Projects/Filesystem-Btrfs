@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential binutils cmake git pkg-config libssl-dev libsqlite3-dev dpkg-dev
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends build-essential binutils cmake git pkg-config libssl-dev libsqlite3-dev dpkg-dev btrfs-progs
       - name: Build and inspect portable DEB and source-embedded RUN
         run: |
           set -euo pipefail
@@ -42,6 +42,17 @@ jobs:
           test "$(find "$RUNNER_TEMP/native-root" -type f | wc -l)" = 2
           sh tests/check_v2_exports.sh "$RUNNER_TEMP/native-root/System/Filesystems/BTRFS.so"
           test "$(find "$RUNNER_TEMP/native-root" -name '*.ko' | wc -l)" = 0
+      - name: Read disposable media through both packaged carriers and their embedded readers
+        shell: bash
+        run: |
+          set -euo pipefail
+          check="$RUNNER_TEMP/btrfs-media-check"
+          cmake -S . -B "$check" -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
+          cmake --build "$check" --target btrfs-readonly-media btrfs-firmware --parallel 2
+          for root in "$RUNNER_TEMP/portable" "$RUNNER_TEMP/native-root"; do
+            bash tests/readonly_media.sh "$check/btrfs-readonly-media" \
+              "$root/System/Filesystems/BTRFS.so" "$check/firmware/BTRFS.so"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: BTRFS-hosted-v2-qualification-only-not-a-BOOT-release

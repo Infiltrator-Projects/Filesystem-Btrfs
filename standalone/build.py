@@ -31,7 +31,7 @@ def run(args):
 
 def install_deps():
     packages = ("build-essential", "binutils", "cmake", "git", "pkg-config",
-                "libssl-dev", "libsqlite3-dev", "dpkg-dev")
+                "libssl-dev", "libsqlite3-dev", "dpkg-dev", "btrfs-progs")
     missing = [p for p in packages if subprocess.run(
         ["dpkg-query", "-W", "-f=$" + "{Status}", p], capture_output=True,
         text=True).stdout.strip() != "install ok installed"]

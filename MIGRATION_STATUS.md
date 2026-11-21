@@ -1,42 +1,10 @@
-# BTRFS Common V2 migration
+# Btrfs qualification
 
-## Hosted status
-
-- V2 probe: CRC32C-checked superblock, basic geometry and single-device checks
-- V2 read-only mount/unmount: **metadata-only session**, not a namespace
-- V2 volume query: reports recorded superblock allocation, not a full verified free-space tree
-- V2 stat, directory enumeration, path traversal and file contents: **missing**
-- Freestanding ELF and real BOOT production validator acceptance: **missing**
-- OVMF kernel and initramfs reads: **not tested**
-- Supported incompatible feature flags and full tree/checksum validation:
-  **still require qualification**
-
-## Production boundary
-
-BTRFS.so now exports only the Common V2 API. The original format scanner,
-worker and fixture callback bindings stay in tree for a **test-only** library,
-never the installed ELF. The Linux VFS implementation is retained as
-historical source, not bundled as a kernel fallback. Build version comes
-from the repository's actual VERSION file rather than a stale hardcoded
-1.0.0 string. Package workflows qualify only two payload files: the real
-V2 shared object and its PDF; no .ko is published. No firmware release
-is published from these hosted-only checks.
-
-## 21 November 2026 — strict Common V2 feature/geometry rejection
-
-The production metadata-only V2 provider now rejects checksum-valid media
-with physically impossible sector sizes or an unrecognized incompatible or
-read-only-compatible superblock feature. The feature policy deliberately
-fails closed for zoned/tree/stripe/quota layouts not implemented by the
-current independent Btrfs reader. Real Common V2 PROBE tests exercise those
-negative cases as well as the existing corruption and read-only session tests.
-This is **not** a freestanding namespace or BOOT compatibility claim:
-STAT/LIST/READ, chunk mapping, the filesystem tree, an embedded firmware
-reader, actual BOOT validator and OVMF qualification are still outstanding.
-
-## 21 November 2026 — reject impossible root-tree identities
-
-The actual Common V2 checksum-valid probe rejects a zero filesystem UUID
-and root/chunk tree logical addresses that are not aligned to the recorded
-node size. The native superblock validation remains read-only and does not
-claim working tree traversal, file contents or BOOT qualification.
+| Target | Evidence |
+| --- | --- |
+| Published v1.0.11 | The Debian carrier provides a hosted metadata probe and mount. It has no freestanding namespace payload. |
+| Current source | Both profiles share the CRC32C verifier, logical-to-physical chunk mappings and bounded tree reader. Both use the Common V2 descriptor. |
+| Real image | `btrfs-carrier-and-firmware-real-media` compares every byte through CORE, tests directory enumeration and distinct session handles, and repeats on 512-byte and 4096-byte logical sectors. |
+| Damaged media | The test damages both root-tree replicas on one copy and a different byte in a requested file sector on another. The metadata and data checks must return `IFS_FS_CORRUPT`. Injected host read failure must return `IFS_FS_IO_ERROR`. |
+| Image preservation | The test opens images read-only and checks their SHA-256 digests after exercising both profiles. |
+| Consumer qualification | Validation and kernel/initramfs reads through the rebuilt Infiltrator BOOT remain pending. New release publication is held. |
