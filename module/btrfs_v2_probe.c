@@ -20,6 +20,14 @@ static uint32_t le32(const uint8_t *p)
          ((uint32_t)p[2]<<16)|((uint32_t)p[3]<<24); }
 static uint64_t le64(const uint8_t *p)
 { return (uint64_t)le32(p)|((uint64_t)le32(p+4)<<32); }
+/* Restrict superblock recognition to feature bits understood by this
+ * conservative single-device metadata reader.  A recognized superblock
+ * is NOT a boot-capable namespace until V2 STAT/LIST/READ exist.
+ * Incompat bits 12+ introduce zoned/tree/stripe/quota layouts which this
+ * reader cannot safely interpret.  RO-compat allows free-space-tree,
+ * its valid marker, and verity, but not unrecognized tree layouts. */
+#define IFS_BTRFS_V2_COMPAT_RO_KNOWN UINT64_C(0x7)
+#define IFS_BTRFS_V2_INCOMPAT_KNOWN UINT64_C(0xfff)
 static int inspect(const IfsFsHostRuntimeV2 *h,uint32_t *variant,
                    IfsFsVolumeInfoV2 *volume)
 {
@@ -51,11 +59,17 @@ static int inspect(const IfsFsHostRuntimeV2 *h,uint32_t *variant,
        !total || total>h->volume_bytes || used>total ||
        le64(raw+136u)!=1u || !le64(raw+80u) ||
        !le64(raw+88u) || sectorsize<4096u ||
-       (sectorsize&(sectorsize-1u)) ||
+       sectorsize>65536u || (sectorsize&(sectorsize-1u)) ||
        nodesize<sectorsize || nodesize>65536u ||
        (nodesize&(nodesize-1u)) ||
+       (total%sectorsize) || (used%sectorsize) ||
        raw[198u]>8u || raw[199u]>8u)
         goto done;
+    if ((le64(raw+180u) & ~IFS_BTRFS_V2_COMPAT_RO_KNOWN) ||
+        (le64(raw+188u) & ~IFS_BTRFS_V2_INCOMPAT_KNOWN)) {
+        rc=IFS_FS_UNSUPPORTED;
+        goto done;
+    }
     *variant=1u;
     if(volume) {
         /* Recorded logical bytes_used: a single-device filesystem only.

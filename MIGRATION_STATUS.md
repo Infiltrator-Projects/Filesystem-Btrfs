@@ -21,3 +21,15 @@ from the repository's actual VERSION file rather than a stale hardcoded
 1.0.0 string. Package workflows qualify only two payload files: the real
 V2 shared object and its PDF; no .ko is published. No firmware release
 is published from these hosted-only checks.
+
+## 21 November 2026 — strict Common V2 feature/geometry rejection
+
+The production metadata-only V2 provider now rejects checksum-valid media
+with physically impossible sector sizes or an unrecognized incompatible or
+read-only-compatible superblock feature. The feature policy deliberately
+fails closed for zoned/tree/stripe/quota layouts not implemented by the
+current independent Btrfs reader. Real Common V2 PROBE tests exercise those
+negative cases as well as the existing corruption and read-only session tests.
+This is **not** a freestanding namespace or BOOT compatibility claim:
+STAT/LIST/READ, chunk mapping, the filesystem tree, an embedded firmware
+reader, actual BOOT validator and OVMF qualification are still outstanding.

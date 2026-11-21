@@ -79,7 +79,29 @@ int main(void) {
     le32(s,crc32c(s+32u,4096u-32u));
     s[200u]^=1u;variant=0;
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0);
-    s[200u]^=1u;h.maximum_transfer_bytes=0;
+    s[200u]^=1u;
+    /* Checksum-valid metadata must still fail for impossible geometry. */
+    le32(s+144u,131072u);le32(s+148u,131072u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    variant=0;
+    CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+    le32(s+144u,4096u);le32(s+148u,4096u);
+    /* A future incompatible tree format must not be mistaken for
+     * a supported Common V2 filesystem. */
+    le64(s+188u,UINT64_C(1)<<12u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_UNSUPPORTED && variant==0u);
+    le64(s+188u,UINT64_C(1)<<61u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_UNSUPPORTED && variant==0u);
+    le64(s+188u,0u);
+    le64(s+180u,UINT64_C(1)<<60u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_UNSUPPORTED && variant==0u);
+    le64(s+180u,0u);
+    le32(s,crc32c(s+32u,4096u-32u));
+    CHECK(core->probe(&h,&variant)==IFS_FS_OK && variant==1u);
+    h.maximum_transfer_bytes=0;
     CHECK(core->probe(&h,&variant)==IFS_FS_INVALID);
     return 0;
 }
