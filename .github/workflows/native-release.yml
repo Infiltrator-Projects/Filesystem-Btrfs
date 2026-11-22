@@ -61,3 +61,32 @@ jobs:
           name: BTRFS-hosted-v2-qualification-only-not-a-BOOT-release
           path: dist/*
           if-no-files-found: error
+  publish:
+    needs: qualify
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: BTRFS-hosted-v2-qualification-only-not-a-BOOT-release
+          path: dist
+      - name: Publish immutable Common V2 packages without kernel substitutes
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          version="$(tr -d '\r\n' < VERSION)"
+          tag="v$version"
+          test "$(find dist -maxdepth 1 -type f -name '*.deb' | wc -l)" -eq 1
+          test "$(find dist -maxdepth 1 -type f -name '*.run' | wc -l)" -eq 1
+          test "$(find dist -maxdepth 1 -type f -name '*.ko' | wc -l)" -eq 0
+          if gh release view "$tag" --json tagName >/dev/null 2>&1; then
+            echo "Existing immutable release $tag preserved"
+            exit 0
+          fi
+          gh release create "$tag" dist/*.deb dist/*.run --target "$GITHUB_SHA" \
+            --title "Btrfs Common V2 filesystem release $version" \
+            --notes "BTRFS Common V2 hosted and freestanding filesystem reader, packaged as one .so and one manual. Verified with disposable Btrfs media, real kernel/initramfs reads, checksums and corruption tests. Not yet qualified by a V2-capable BOOT consumer."
