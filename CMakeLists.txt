@@ -113,6 +113,18 @@ if(BUILD_TESTING)
     btrfs-legacy-test-support)
   add_test(NAME btrfs-damaged-media-fail-closed
     COMMAND btrfs-native-corruption-test)
+  # Test the very same native directory decoder compiled into both V2
+  # providers. The real-image Common V2 tests above remain mandatory.
+  add_executable(btrfs-duplicate-directory-test
+    tests/test_btrfs_duplicate_directory.c
+    native/btrfs_checksum.c)
+  target_include_directories(btrfs-duplicate-directory-test PRIVATE
+    "${CMAKE_CURRENT_SOURCE_DIR}/native"
+    "${infiltratr_common_SOURCE_DIR}/include")
+  target_compile_options(btrfs-duplicate-directory-test PRIVATE
+    -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME btrfs-v2-duplicate-directory-corruption
+    COMMAND btrfs-duplicate-directory-test)
 endif()
 install(TARGETS btrfs-driver LIBRARY DESTINATION /System/Filesystems)
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/docs/Btrfs.pdf"
