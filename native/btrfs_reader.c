@@ -302,6 +302,7 @@ static int inode(BtrfsReader *r, Tree tree, uint64_t id, Inode *out)
 typedef struct {
     const char *match;
     uint32_t length, skip;
+    unsigned found; /* match-key uniqueness across every DIR_INDEX item */
     char name[256];
     Key location;
     uint8_t type;
@@ -322,6 +323,11 @@ static int dir_item(BtrfsReader *r, Key key, const uint8_t *p, uint32_t size, vo
         bool match =
             find->match ? n == find->length && !memcmp(p + 30, find->match, n) : find->skip == 0;
         if (match) {
+            /* Btrfs DIR_INDEX offsets are distinct, but a malformed tree
+             * can still name the same file twice. A pathname must resolve
+             * uniquely; scan every item instead of accepting the first. */
+            if (find->match && find->found)
+                return IFS_FS_CORRUPT;
             find->location = disk_key(p);
             if ((find->location.type != INODE_ITEM && find->location.type != ROOT_ITEM) ||
                 !find->location.id)
@@ -330,7 +336,9 @@ static int dir_item(BtrfsReader *r, Key key, const uint8_t *p, uint32_t size, vo
             memcpy(find->name, p + 30, n);
             find->name[n] = 0;
             find->length = n;
-            return STOP;
+            find->found = 1u;
+            if (!find->match)
+                return STOP; /* indexed enumeration only needs one item */
         }
         if (!find->match)
             --find->skip;
@@ -385,8 +393,10 @@ static int resolve(BtrfsReader *r, const char *path, File *f, const char **name,
             return IFS_FS_NOT_FOUND;
         DirectorySearch d = {.match = start, .length = (uint32_t)n};
         rc = range(r, f->tree, f->id, DIR_INDEX, dir_item, &d);
-        if (rc != STOP)
-            return rc == IFS_FS_OK ? IFS_FS_NOT_FOUND : rc;
+        if (rc != IFS_FS_OK)
+            return rc;
+        if (!d.found)
+            return IFS_FS_NOT_FOUND;
         rc = follow(r, f, &d);
         if (rc != IFS_FS_OK)
             return rc;
@@ -658,8 +668,8 @@ int btrfs_reader_open(const IfsFsHostRuntimeV2 *host, BtrfsReader **out)
     if (le64(s + 188) & 2) { /* DEFAULT_SUBVOL: follow the recorded root-directory entry. */
         DirectorySearch d = {.match = "default", .length = 7};
         rc = range(r, r->roots, le64(s + 128), DIR_ITEM, dir_item, &d);
-        if (rc != STOP || d.location.type != ROOT_ITEM) {
-            if (rc == IFS_FS_OK || rc == STOP)
+        if (rc != IFS_FS_OK || !d.found || d.location.type != ROOT_ITEM) {
+            if (rc == IFS_FS_OK)
                 rc = IFS_FS_CORRUPT;
             goto done;
         }
