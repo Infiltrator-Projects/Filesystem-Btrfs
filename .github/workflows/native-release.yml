@@ -51,8 +51,9 @@ jobs:
           export BTRFS_TEST_KERNEL="$files/vmlinuz" BTRFS_TEST_INITRAMFS="$files/initramfs"
           check="$RUNNER_TEMP/btrfs-media-check"
           cmake -S . -B "$check" -DBUILD_TESTING=ON -DCMAKE_BUILD_TYPE=Release
-          cmake --build "$check" --target btrfs-readonly-media btrfs-firmware --parallel 2
+          cmake --build "$check" --target btrfs-readonly-media btrfs-firmware btrfs-native-format-test --parallel 2
           for root in "$RUNNER_TEMP/portable" "$RUNNER_TEMP/native-root"; do
+            sh tests/format_media.sh "$check/btrfs-native-format-test" "$root/System/Filesystems/BTRFS.so" "$(command -v btrfs)"
             bash tests/readonly_media.sh "$check/btrfs-readonly-media" \
               "$root/System/Filesystems/BTRFS.so" "$check/firmware/BTRFS.so"
           done

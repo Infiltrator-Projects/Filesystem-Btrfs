@@ -82,6 +82,11 @@ if(BUILD_TESTING)
   add_test(NAME btrfs-carrier-and-firmware-real-media
     COMMAND bash "${CMAKE_CURRENT_SOURCE_DIR}/tests/readonly_media.sh"
       "$<TARGET_FILE:btrfs-readonly-media>" "$<TARGET_FILE:btrfs-driver>" "${BTRFS_FIRMWARE_ELF}")
+  add_executable(btrfs-native-format-test tests/test_format.c)
+  target_include_directories(btrfs-native-format-test PRIVATE "${infiltratr_common_SOURCE_DIR}/include")
+  target_link_libraries(btrfs-native-format-test PRIVATE ${CMAKE_DL_LIBS})
+  target_compile_options(btrfs-native-format-test PRIVATE -Wall -Wextra -Wpedantic -Werror)
+  add_test(NAME btrfs-native-format COMMAND sh "${CMAKE_CURRENT_SOURCE_DIR}/tests/format_media.sh" "$<TARGET_FILE:btrfs-native-format-test>" "$<TARGET_FILE:btrfs-driver>")
   add_executable(btrfs-module-test tests/test_module.c)
   target_include_directories(btrfs-module-test PRIVATE
     "${infiltratr_common_SOURCE_DIR}/include")
