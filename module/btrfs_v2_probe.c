@@ -148,7 +148,15 @@ static int mount_volume(const IfsFsHostRuntimeV2 *h, void **handle, IfsFsVolumeI
     for (unsigned i = 0; i < IFS_FS_RO_MAX_SESSIONS_V2 && next_token != UINTPTR_MAX; ++i) {
         if (mounts[i].reader)
             continue;
-        mounts[i] = (Mount){++next_token, 0, reader, measured};
+        /* Keep the monotonically issued token private to this module.
+         * A token from another filesystem should not normally identify
+         * the same session index in this independent provider. */
+        uintptr_t token=++next_token ^ (uintptr_t)(void *)mounts;
+        if (!token) {
+            if (next_token==UINTPTR_MAX) break;
+            token=++next_token ^ (uintptr_t)(void *)mounts;
+        }
+        mounts[i] = (Mount){token, 0, reader, measured};
         *handle = (void *)mounts[i].token;
         *info = measured;
         break;
