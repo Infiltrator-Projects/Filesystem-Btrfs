@@ -475,14 +475,22 @@ static int mount_volume(const IfsFsHostRuntimeV2 *h,void **handle,IfsFsVolumeInf
     return rc;
 }
 
+/* Hold the session pin while returning the verified superblock label. */
+static int volume_label(void *handle,char *out,uint32_t capacity,uint32_t *bytes)
+{
+    if(!bytes)return IFS_FS_INVALID;
+    *bytes=0u;
+    Mount *m=acquire(handle);
+    return m ? finished(m,btrfs_reader_label(m->reader,out,capacity,bytes)) : IFS_FS_INVALID;
+}
 static const IfsFsVolumeOpsV2 volume_ops = {
     .header = {IFS_FS_GROUP_ABI_V2, sizeof(IfsFsVolumeOpsV2), IFS_FS_GROUP_VOLUME, 0u,
-               IFS_FS_VOLUME_QUERY
+               IFS_FS_VOLUME_QUERY | IFS_FS_VOLUME_LABEL_GET
 #ifndef IFS_BTRFS_FIRMWARE
                | IFS_FS_VOLUME_FORMAT
 #endif
     },
-    .query = query_volume
+    .query = query_volume, .label=volume_label
 #ifndef IFS_BTRFS_FIRMWARE
     ,.format = format_volume
 #endif

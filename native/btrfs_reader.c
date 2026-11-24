@@ -40,6 +40,7 @@ typedef struct {
 struct BtrfsReader {
     IfsFsHostRuntimeV2 host;
     uint8_t fsid[16], device_uuid[16];
+    uint8_t label[256];
     uint32_t sector, node;
     uint64_t device, generation, root_inode;
     Tree roots, files, checksums;
@@ -438,6 +439,19 @@ static int entry(const File *f, const char *name, size_t n, IfsFsEntryV2 *out)
 }
 /* Return native inode ownership and permissions from the same verified
  * namespace traversal used by stat. No synthetic modes, no mutation. */
+/* The label is immutable for the lifetime of this read-only session. */
+int btrfs_reader_label(const BtrfsReader *r,char *out,uint32_t capacity,uint32_t *bytes)
+{
+    if(!bytes)return IFS_FS_INVALID;
+    *bytes=0u;
+    if(!r || !out || !capacity)return IFS_FS_INVALID;
+    uint32_t n=0u;
+    while(n<sizeof(r->label) && r->label[n])++n;
+    if(n>=capacity)return IFS_FS_NO_SPACE;
+    memcpy(out,r->label,n);
+    out[n]=0;*bytes=n;
+    return IFS_FS_OK;
+}
 int btrfs_reader_metadata(BtrfsReader *r,const char *path,IfsFsMetadataV2 *out)
 {
     if(!out || out->structure_bytes<sizeof(*out)) return IFS_FS_INVALID;
@@ -643,6 +657,8 @@ int btrfs_reader_open(const IfsFsHostRuntimeV2 *host, BtrfsReader **out)
     }
     r->implicit_holes = (le64(s + 188) & UINT64_C(0x200)) != 0;
     memcpy(r->fsid, s + 32, 16);
+    /* Preserve only the label of the checksum-validated superblock. */
+    memcpy(r->label,s+299u,sizeof(r->label));
     memcpy(r->device_uuid, s + 201 + 66, 16);
     if (memcmp(s + 201 + 82, r->fsid, 16)) {
         rc = IFS_FS_CORRUPT;

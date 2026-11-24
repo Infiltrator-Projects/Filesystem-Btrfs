@@ -9,6 +9,7 @@ uint32_t btrfs_crc32c(const uint8_t *data, size_t bytes);
 bool btrfs_checksum_valid(const uint8_t *block, size_t length);
 int btrfs_reader_open(const IfsFsHostRuntimeV2 *host, BtrfsReader **out);
 void btrfs_reader_close(BtrfsReader *reader);
+int btrfs_reader_label(const BtrfsReader *,char *,uint32_t,uint32_t *);
 int btrfs_reader_metadata(BtrfsReader *r,const char *path,IfsFsMetadataV2 *out);
 int btrfs_reader_stat(BtrfsReader *reader, const char *path, IfsFsEntryV2 *out);
 int btrfs_reader_list(BtrfsReader *reader, const char *path, uint32_t index, IfsFsEntryV2 *out);
