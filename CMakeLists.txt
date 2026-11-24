@@ -101,6 +101,10 @@ if(BUILD_TESTING)
   add_test(NAME btrfs-v2-only-dynamic-export
     COMMAND sh "${CMAKE_CURRENT_SOURCE_DIR}/tests/check_v2_exports.sh"
       "$<TARGET_FILE:btrfs-driver>")
+  # Only the production V2 descriptor, in-memory probe and export check
+  # run during native installation; CI retains all real-media regressions.
+  set_tests_properties(btrfs-module-interface btrfs-common-v2-probe
+    btrfs-v2-only-dynamic-export PROPERTIES LABELS "install-smoke" TIMEOUT 30)
   add_executable(btrfs-native-corruption-test
     tests/test_btrfs_native_corruption.c)
   target_include_directories(btrfs-native-corruption-test PRIVATE
