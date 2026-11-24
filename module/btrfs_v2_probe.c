@@ -226,6 +226,17 @@ static int read_file(void *handle, const char *path, uint64_t offset, void *out,
     Mount *m = acquire(handle);
     return m ? finished(m, btrfs_reader_read(m->reader, path, offset, out, bytes)) : IFS_FS_INVALID;
 }
+/* Pin the mounted reader for metadata I/O just as for file reads. */
+static int get_metadata(void *handle,const char *path,IfsFsMetadataV2 *out)
+{
+    Mount *m=acquire(handle);
+    return m ? finished(m,btrfs_reader_metadata(m->reader,path,out)) : IFS_FS_INVALID;
+}
+static const IfsFsMetadataOpsV2 metadata_ops={
+    .header={IFS_FS_GROUP_ABI_V2,sizeof(metadata_ops),IFS_FS_GROUP_METADATA,0u,
+             IFS_FS_META_GET_MODE},
+    .get=get_metadata
+};
 static const IfsFsVolumeOpsV2 volume_ops = {
     .header = {IFS_FS_GROUP_ABI_V2, sizeof(IfsFsVolumeOpsV2), IFS_FS_GROUP_VOLUME, 0u,
                IFS_FS_VOLUME_QUERY},
@@ -248,6 +259,7 @@ static const IfsFsGroupHeaderV2 *query(uint32_t group, uint32_t lo, uint32_t hi)
         return &core.header;
     if (group == IFS_FS_GROUP_VOLUME)
         return &volume_ops.header;
+    if (group == IFS_FS_GROUP_METADATA) return &metadata_ops.header;
     return NULL;
 }
 static const IfsFsModuleApiV2 api = {
@@ -259,7 +271,8 @@ static const IfsFsModuleApiV2 api = {
 #else
     .runtime_profiles = IFS_FS_PROFILE_HOSTED,
 #endif
-    .group_mask = IFS_FS_GROUP_BIT(IFS_FS_GROUP_CORE) | IFS_FS_GROUP_BIT(IFS_FS_GROUP_VOLUME),
+    .group_mask = IFS_FS_GROUP_BIT(IFS_FS_GROUP_CORE) | IFS_FS_GROUP_BIT(IFS_FS_GROUP_VOLUME) |
+                  IFS_FS_GROUP_BIT(IFS_FS_GROUP_METADATA),
     .query_group = query};
 __attribute__((visibility("default"))) const IfsFsModuleApiV2 *infiltrator_filesystem_api_v2(void)
 {

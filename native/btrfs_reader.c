@@ -281,7 +281,7 @@ static int lookup_root(BtrfsReader *r, uint64_t id, Root *out)
 
 typedef struct {
     uint64_t size, flags;
-    uint32_t mode;
+    uint32_t mode, uid, gid;
 } Inode;
 static int read_inode(BtrfsReader *r, Key k, const uint8_t *p, uint32_t size, void *ctx)
 {
@@ -289,7 +289,8 @@ static int read_inode(BtrfsReader *r, Key k, const uint8_t *p, uint32_t size, vo
     (void)k;
     if (size != 160)
         return IFS_FS_CORRUPT;
-    *(Inode *)ctx = (Inode){le64(p + 16), le64(p + 64), le32(p + 52)};
+    *(Inode *)ctx = (Inode){.size=le64(p + 16), .flags=le64(p + 64),
+        .mode=le32(p + 52), .uid=le32(p + 44), .gid=le32(p + 48)};
     return STOP;
 }
 static int inode(BtrfsReader *r, Tree tree, uint64_t id, Inode *out)
@@ -433,6 +434,20 @@ static int entry(const File *f, const char *name, size_t n, IfsFsEntryV2 *out)
     out->size_bytes = f->inode.size;
     out->attributes = 0;
     out->type = type;
+    return IFS_FS_OK;
+}
+/* Return native inode ownership and permissions from the same verified
+ * namespace traversal used by stat. No synthetic modes, no mutation. */
+int btrfs_reader_metadata(BtrfsReader *r,const char *path,IfsFsMetadataV2 *out)
+{
+    if(!out || out->structure_bytes<sizeof(*out)) return IFS_FS_INVALID;
+    File f;
+    const char *name;
+    size_t length;
+    int rc=resolve(r,path,&f,&name,&length);
+    if(rc) return rc;
+    *out=(IfsFsMetadataV2){.structure_bytes=sizeof(*out),.mask=IFS_FS_META_GET_MODE,
+        .mode=f.inode.mode,.owner=f.inode.uid,.group=f.inode.gid};
     return IFS_FS_OK;
 }
 int btrfs_reader_stat(BtrfsReader *r, const char *path, IfsFsEntryV2 *out)
