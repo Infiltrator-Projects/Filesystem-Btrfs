@@ -379,11 +379,12 @@ static int format_impl(const IfsFsHostRuntimeV2 *h,const char *label)
     }
     COMMIT();
     /* Allocation accounting includes every tree and both block groups.
-     * Separate tree-block backrefs are legal skinny metadata records. */
+     * Inline root backrefs allow independent root-item consistency checking. */
     leaf_begin(leaf,ids,addr[2],2u);
     for(unsigned i=0;i<7u;++i) {
-        ITEM(addr[i],169u,0u,24u);f64(v,1u);f64(v+8,1u);f64(v+16,2u);
-        ITEM(addr[i],176u,owners[i],0u);
+        ITEM(addr[i],169u,0u,33u);f64(v,1u);f64(v+8,1u);f64(v+16,2u);
+        /* Inline root backreference is required by root-item checking. */
+        v[24]=176u;f64(v+25,owners[i]);
         if(i==0u||i==1u) {
             ITEM(addr[i],192u,i?FMT_MIXED_LEN:FMT_SYSTEM_LEN,24u);
             f64(v,i?6u*FMT_NODE:FMT_NODE);f64(v+8,256u);f64(v+16,i?5u:2u);
