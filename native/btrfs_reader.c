@@ -619,6 +619,82 @@ int btrfs_reader_read(BtrfsReader *r, const char *path, uint64_t offset, void *o
     return rc;
 }
 
+/* A Common V2 extent is a physical single-device byte range, never a
+ * Btrfs logical bytenr. Inline, compressed, hole and mirrored data cannot
+ * be represented by this contract; fail rather than fabricate an address. */
+typedef struct {
+    uint64_t size,logical,index,first;
+    uint32_t count,capacity;
+    IfsFsExtentV2 *out;
+    IfsFsExtentV2 run;
+} FileMap;
+static void finish_map_run(FileMap *m)
+{
+    if(!m->run.length)return;
+    if(m->index>=m->first && m->count<m->capacity)
+        m->out[m->count++]=m->run;
+    ++m->index;
+    m->run=(IfsFsExtentV2){0};
+}
+static int map_extent(BtrfsReader *r,Key k,const uint8_t *p,uint32_t size,void *ctx)
+{
+    FileMap *m=ctx;
+    if(r->host.cancelled && r->host.cancelled(r->host.context))return IFS_FS_BUSY;
+    if(size<21u || k.offset%r->sector)return IFS_FS_CORRUPT;
+    if(k.offset>=m->size)return IFS_FS_OK;
+    if(k.offset<m->logical)return IFS_FS_CORRUPT;
+    if(k.offset!=m->logical || p[16] || p[17] || le16(p+18) || p[20]!=1u)
+        return IFS_FS_UNSUPPORTED;
+    if(size!=53u)return IFS_FS_CORRUPT;
+    const uint64_t ram=le64(p+8),disk=le64(p+21),disk_len=le64(p+29),
+                   delta=le64(p+37),len=le64(p+45);
+    if(!disk)return IFS_FS_UNSUPPORTED;
+    if(!len || len%r->sector || disk%r->sector || disk_len%r->sector ||
+       delta%r->sector || ram!=disk_len || delta>disk_len ||
+       len>disk_len-delta || disk_len>UINT64_MAX-disk)
+        return IFS_FS_CORRUPT;
+    const uint64_t at=disk+delta;
+    const uint64_t length=len<m->size-m->logical?len:m->size-m->logical;
+    for(size_t i=0u;i<r->mappings;++i) {
+        const Mapping *chunk=&r->map[i];
+        if(at<chunk->logical || at-chunk->logical>=chunk->length)continue;
+        const uint64_t within=at-chunk->logical;
+        if(!(chunk->flags&1u) || len>chunk->length-within)return IFS_FS_CORRUPT;
+        if(chunk->stripes!=1u)return IFS_FS_UNSUPPORTED;
+        const uint64_t physical=chunk->physical[0]+within;
+        if(m->run.length && m->run.physical_offset+m->run.length==physical)
+            m->run.length+=length;
+        else {
+            finish_map_run(m);
+            m->run=(IfsFsExtentV2){m->logical,physical,length,0u,0u};
+        }
+        m->logical+=length;
+        return IFS_FS_OK;
+    }
+    return IFS_FS_CORRUPT;
+}
+int btrfs_reader_map(BtrfsReader *r,const char *path,uint64_t first,
+                     IfsFsExtentV2 *out,uint32_t capacity,uint32_t *written)
+{
+    if(!written)return IFS_FS_INVALID;
+    *written=0u;
+    if(!r || !out || !capacity)return IFS_FS_INVALID;
+    File f;
+    const char *name;
+    size_t n;
+    int rc=resolve(r,path,&f,&name,&n);
+    if(rc!=IFS_FS_OK)return rc;
+    if((f.inode.mode&0170000u)!=0100000u)return IFS_FS_UNSUPPORTED;
+    if(!f.inode.size)return IFS_FS_END;
+    FileMap m={.size=f.inode.size,.first=first,.capacity=capacity,.out=out};
+    rc=range(r,f.tree,f.id,EXTENT_DATA,map_extent,&m);
+    if(rc!=IFS_FS_OK)return rc;
+    if(m.logical!=m.size)return IFS_FS_UNSUPPORTED;
+    finish_map_run(&m);
+    *written=m.count;
+    return m.count?IFS_FS_OK:IFS_FS_END;
+}
+
 int btrfs_reader_open(const IfsFsHostRuntimeV2 *host, BtrfsReader **out)
 {
     *out = NULL;

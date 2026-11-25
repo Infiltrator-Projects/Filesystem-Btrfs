@@ -15,4 +15,6 @@ int btrfs_reader_stat(BtrfsReader *reader, const char *path, IfsFsEntryV2 *out);
 int btrfs_reader_list(BtrfsReader *reader, const char *path, uint32_t index, IfsFsEntryV2 *out);
 int btrfs_reader_read(BtrfsReader *reader, const char *path, uint64_t offset, void *out,
                       uint32_t bytes);
+int btrfs_reader_map(BtrfsReader *,const char *,uint64_t,
+                     IfsFsExtentV2 *,uint32_t,uint32_t *);
 #endif

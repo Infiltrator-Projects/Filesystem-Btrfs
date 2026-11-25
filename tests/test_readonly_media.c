@@ -91,6 +91,10 @@ int main(int argc, char **argv)
     memcpy(&fn, &symbol, sizeof(fn));
     const IfsFsModuleApiV2 *api = fn();
     CHECK(ifs_fs_api_v2_valid(api, "btrfs"));
+    const IfsFsDefragOpsV2 *defrag=(const void *)ifs_fs_group_v2(api,IFS_FS_GROUP_DEFRAG);
+    CHECK((api->runtime_profiles&IFS_FS_PROFILE_HOSTED)?
+          (defrag && defrag->header.capabilities==IFS_FS_DEFRAG_MAP &&
+           defrag->map && !defrag->plan):!defrag);
     const IfsFsCoreOpsV2 *core = (const void *)ifs_fs_group_v2(api, IFS_FS_GROUP_CORE);
     const IfsFsVolumeOpsV2 *vol = (const void *)ifs_fs_group_v2(api, IFS_FS_GROUP_VOLUME);
     CHECK(core && core->stat && core->directory_entry && core->read && !core->write && vol &&
@@ -194,6 +198,28 @@ int main(int argc, char **argv)
         CHECK(!unmount_during_read && observed_unmount==IFS_FS_BUSY);
         if (seen & 8)
             CHECK(!check_file(core, mount, argv[3], "sparse"));
+        if(defrag) {
+            CHECK(core->stat(mount,"/boot/vmlinuz",&e)==IFS_FS_OK);
+            uint64_t logical=0u;
+            for(uint64_t page=0u;;++page) {
+                IfsFsExtentV2 extent={0};
+                uint32_t count=99u;
+                int status=defrag->map(mount,"/boot/vmlinuz",page,&extent,1u,&count);
+                if(status==IFS_FS_END) { CHECK(!count); break; }
+                CHECK(status==IFS_FS_OK && count==1u && extent.logical_offset==logical &&
+                      extent.length && extent.length<=e.size_bytes-logical);
+                unsigned char expected[4096],actual[4096];
+                uint32_t bytes=extent.length<sizeof(expected)?(uint32_t)extent.length:sizeof(expected);
+                CHECK(core->read(mount,"/boot/vmlinuz",logical,expected,bytes)==IFS_FS_OK);
+                CHECK(pread(device.fd,actual,bytes,(off_t)extent.physical_offset)==(ssize_t)bytes);
+                CHECK(!memcmp(expected,actual,bytes));
+                logical+=extent.length;
+            }
+            CHECK(logical==e.size_bytes);
+            IfsFsExtentV2 extent={0};
+            uint32_t count=99u;
+            CHECK(defrag->map(mount,"/boot/missing",0u,&extent,1u,&count)==IFS_FS_NOT_FOUND && !count);
+        }
         strcpy(name, "sentinel");
         e.name_capacity = 2;
         CHECK(core->stat(mount, "/boot/inline", &e) == IFS_FS_NO_SPACE &&
