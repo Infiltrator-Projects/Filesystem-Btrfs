@@ -635,7 +635,8 @@ int btrfs_reader_open(const IfsFsHostRuntimeV2 *host, BtrfsReader **out)
     if (rc != IFS_FS_OK)
         goto done;
     if (memcmp(s + 64, "_BHRfS_M", 8) || le16(s + 196) || !btrfs_checksum_valid(s, 4096) ||
-        le64(s + 48) != 65536) {
+        le64(s + 48) != 65536 || s[198] >= 8u ||
+        s[199] >= 8u || s[200] >= 8u) {
         rc = IFS_FS_CORRUPT;
         goto done;
     }

@@ -94,6 +94,15 @@ int main(void) {
     variant=0;
     CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
     le32(s+144u,4096u);le32(s+148u,4096u);
+    /* All three native tree depths must be in [0,7], even on a
+     * correctly checksummed superblock and even if no log is active. */
+    for(unsigned field=198u;field<=200u;++field) {
+        s[field]=8u;
+        le32(s,crc32c(s+32u,4096u-32u));
+        variant=123u;
+        CHECK(core->probe(&h,&variant)==IFS_FS_CORRUPT && variant==0u);
+        s[field]=0u;
+    }
     /* A future incompatible tree format must not be mistaken for
      * a supported Common V2 filesystem. */
     le64(s+188u,UINT64_C(1)<<12u);

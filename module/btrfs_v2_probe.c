@@ -71,7 +71,8 @@ static int inspect(const IfsFsHostRuntimeV2 *h, uint32_t *variant, IfsFsVolumeIn
         (sectorsize & (sectorsize - 1u)) || nodesize < sectorsize || nodesize > 65536u ||
         (nodesize & (nodesize - 1u)) || (root % sectorsize) || (chunk_root % sectorsize) ||
         (log_root && (log_root % sectorsize)) || (total % sectorsize) || (used % sectorsize) ||
-        raw[198u] > 8u || raw[199u] > 8u)
+        /* On-media B-tree levels are 0..7, including the log tree. */
+        raw[198u] >= 8u || raw[199u] >= 8u || raw[200u] >= 8u)
         goto done;
     if ((le64(raw + 180u) & ~IFS_BTRFS_V2_COMPAT_RO_KNOWN) ||
         (le64(raw + 188u) & ~IFS_BTRFS_V2_INCOMPAT_KNOWN)) {
