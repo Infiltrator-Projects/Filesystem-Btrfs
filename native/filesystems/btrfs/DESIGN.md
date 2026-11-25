@@ -1,5 +1,13 @@
 # Btrfs Design and Ownership
 
+## Current production architecture
+
+The independent `BTRFS.so` is the canonical installed filesystem provider. Hosted and freestanding namespace reader exposes probe, mount, stat, enumeration and read. The hosted VOLUME descriptor also declares FORMAT and QUERY; check the actual masks and qualification for each profile. The canonical entry point is `infiltrator_filesystem_api_v2`. Consumers must negotiate the actual profile and operation masks and use bounded, partition-relative host I/O. A source-level callback does not by itself establish that every format variant or host profile is qualified.
+
+The hosted and freestanding profiles are qualified separately. Only the shared object and its technical PDF are installed by the filesystem package; the native RUN downloads its exact source revision. No separate per-format kernel or EFI driver or FUSE substitute is a production delivery path. See the [current README](../../../README.md) and [migration evidence](../../../MIGRATION_STATUS.md) for exact scope and qualification. The inherited design and source-ownership record below is historical where it describes older source layouts, implementation status or adapters; it remains valuable for format semantics and attribution.
+
+## Historical design and source record
+
 > **Working source (23 October 2026).** This filesystem's `linux/` directory contains the actual copied Linux implementation source, preserved with its original attribution and available for direct modification. It is not a replaceable research-only reference tree. The old independently-rewrite-first policy and any old directory-layout/refresh language below are historical, not a restriction on editing this working baseline. Only explicitly qualified drivers appear in `data/native-filesystems.tsv`.
 
 
@@ -9,16 +17,16 @@ Btrfs is a conventional local copy-on-write filesystem with checksums,
 snapshots/subvolumes and multi-device capabilities. It belongs in the normal
 canonical-engine architecture.
 
-## Current state
+## Historical state
 
-Btrfs is currently **imported-source development state**. The source under
+Btrfs was originally documented as **imported-source development state**. The source under
 `linux/` is the pinned upstream Linux implementation and is not
 project-authored Filesystems code.
 
 The reference tree is intentionally preserved with upstream filenames,
 licences, copyright and subsystem boundaries.
 
-## Current directory contract
+## Historical directory contract
 
 While Btrfs remains in imported-source development state, the filesystem root contains only
 `DESIGN.md` and `linux/`; the copied Linux tree remains under
