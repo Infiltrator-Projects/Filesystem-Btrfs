@@ -3,7 +3,7 @@
 << /Type /Catalog /Pages 2 0 R >>
 endobj
 2 0 obj
-<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R 30 0 R 32 0 R 34 0 R 36 0 R 38 0 R 40 0 R 42 0 R 44 0 R 46 0 R 48 0 R 50 0 R 52 0 R 54 0 R] /Count 25 >>
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R 30 0 R 32 0 R] /Count 14 >>
 endobj
 3 0 obj
 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
@@ -18,767 +18,376 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<< /Length 1170 >>
+<< /Length 1446 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (History and architecture) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It) Tj
-T* (uses checksummed copy-on-write B-trees, logical address spaces mapped to) Tj
-T* (physical devices, shared extents, subvolumes and snapshots. This reference) Tj
-T* (is pinned to Linux v6.12's on-disk definitions. A logical tree block address) Tj
-T* (is not directly a device byte offset, and a file's inode identity is scoped) Tj
-T* (to its subvolume tree. Allocation and ownership depend on the) Tj
-T* (extent/backreference trees rather than directory reachability alone.) Tj
-T* (Single-device SINGLE/DUP profiles are distinct from RAID layouts;) Tj
-T* (unsupported feature and device combinations must not be silently) Tj
-T* (approximated.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 1 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 18 Tf 43 736 Td (Contents) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 711 Td (1. History and architecture) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 695 Td (2. Superblock replicas and fixed fields) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 679 Td (3. Bootstrap device and chunk mappings) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 663 Td (4. Chunk items and worked translation) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 647 Td (5. Tree block headers and key layout) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 631 Td (6. Root tree and object identities) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 615 Td (7. Inode items and directories) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 599 Td (8. File extent item layout) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 583 Td (9. Checksums, compression and repair) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 567 Td (10. Extent and backreference ownership) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 551 Td (11. Copy-on-write publication and tree log) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 535 Td (12. Implementation and qualification boundary) Tj ET
+0.08 0.14 0.20 rg BT /F1 11 Tf 43 519 Td (13. Formatting, relocation and acceptance) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 1) Tj ET
 endstream
 endobj
 8 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<< /Length 1268 >>
+<< /Length 1826 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Superblock replicas and fixed fields) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(Superblocks are 4096 bytes, normally at physical device offsets 64 KiB, 64) Tj
-T* (MiB and 256 GiB where within the device. Little-endian fields: checksum) Tj
-T* (0..31, FSID 32..47, self physical bytenr 48, flags 56, magic _BHRfS_M at 64,) Tj
-T* (generation 72, root-tree logical bytenr 80, chunk-root 88, log-root 96,) Tj
-T* (obsolete log transid 104, total bytes 112, used 120, root-directory object) Tj
-T* (ID 128, device count 136. Sector/node/obsolete leaf/stripe size fields at) Tj
-T* (144/148/152/156, system chunk array bytes 160, chunk-root generation 164,) Tj
-T* (compatible/RO/incompatible 172/180/188, checksum type 196, tree levels) Tj
-T* (198/199/200. Validate every copy's checksum, identity, geometry, feature) Tj
-T* (masks and root coherence rather than simply choosing the highest generation.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 2 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (1. History and architecture) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It uses) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (checksummed copy-on-write B-trees, logical address spaces mapped to physical) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (devices, shared extents, subvolumes and snapshots. This reference is pinned to) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (Linux v6.12's on-disk definitions. A logical tree block address is not directly a) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (device byte offset, and a file's inode identity is scoped to its subvolume tree.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (Allocation and ownership depend on the extent/backreference trees rather than) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (directory reachability alone. Single-device SINGLE/DUP profiles are distinct from) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (RAID layouts; unsupported feature and device combinations must not be silently) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (approximated.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (The design addressed server storage complexity through integrated volume management) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (and checksums rather than a conventional journal alone. Profile compatibility and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 542 Td (operational limits have changed over time; inspect the actual features.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 2) Tj ET
 endstream
 endobj
 10 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 11 0 R >>
 endobj
 11 0 obj
-<< /Length 1210 >>
+<< /Length 1588 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Bootstrap device and chunk mappings) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(The packed device item begins at superblock byte 201 and contains device ID) Tj
-T* (at relative 0, total bytes 8, used 16, I/O alignment 24, width 28, sector) Tj
-T* (size 32, type 36, generation 44, start offset 52, group 60, speed/bandwidth) Tj
-T* (64/65, UUID 66 and FSID 82. Its size is 98 bytes. The system chunk array) Tj
-T* (starts at superblock byte 811 in the pinned layout, and consists of 17-byte) Tj
-T* (disk keys followed by variable-size chunk values. Bound its declared byte) Tj
-T* (count to the array capacity. These system mappings permit reading the chunk) Tj
-T* (tree before the full mapping is known. Cross-check the device table, stripe) Tj
-T* (UUIDs and chunk root; a missing member must not be treated as an all-zero) Tj
-T* (device.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 3 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (2. Superblock replicas and fixed fields) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Superblocks are 4096 bytes, normally at physical device offsets 64 KiB, 64 MiB and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (256 GiB where within the device. Little-endian fields: checksum 0..31, FSID 32..47,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (self physical bytenr 48, flags 56, magic _BHRfS_M at 64, generation 72, root-tree) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (logical bytenr 80, chunk-root 88, log-root 96, obsolete log transid 104, total) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (bytes 112, used 120, root-directory object ID 128, device count 136.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (Sector/node/obsolete leaf/stripe size fields at 144/148/152/156, system chunk array) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (bytes 160, chunk-root generation 164, compatible/RO/incompatible 172/180/188,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (checksum type 196, tree levels 198/199/200. Validate every copy's checksum,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (identity, geometry, feature masks and root coherence rather than simply choosing) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (the highest generation.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 3) Tj ET
 endstream
 endobj
 12 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 13 0 R >>
 endobj
 13 0 obj
-<< /Length 1294 >>
+<< /Length 1481 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Chunk items and worked translation) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(A chunk item value begins with logical length 0, owner 8, stripe length 16,) Tj
-T* (profile/type flags 24, I/O align/width/sector size 32/36/40, stripe count 44) Tj
-T* (and sub-stripe count 46. Stripe descriptors begin at 48; each is 32 bytes:) Tj
-T* (device ID 0, device byte offset 8, UUID 16. The chunk key's offset is the) Tj
-T* (logical chunk start. For SINGLE, logical p maps to stripe physical) Tj
-T* (offset+\(p-chunk_start\). For DUP, multiple offsets on the same device hold) Tj
-T* (alternate copies. Example: chunk logical start 1 GiB, physical start 2 GiB,) Tj
-T* (logical byte 1 GiB+8192 maps to 2147491840 on the declared device. RAID0/10) Tj
-T* (stripe arithmetic and RAID5/6 parity placement require native) Tj
-T* (profile-specific mapping; do not use the SINGLE formula. Split I/O across) Tj
-T* (mapping/stripe boundaries.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 4 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (3. Bootstrap device and chunk mappings) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (The packed device item begins at superblock byte 201 and contains device ID at) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (relative 0, total bytes 8, used 16, I/O alignment 24, width 28, sector size 32,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (type 36, generation 44, start offset 52, group 60, speed/bandwidth 64/65, UUID 66) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (and FSID 82. Its size is 98 bytes. The system chunk array starts at superblock byte) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (811 in the pinned layout, and consists of 17-byte disk keys followed by) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (variable-size chunk values. Bound its declared byte count to the array capacity.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (These system mappings permit reading the chunk tree before the full mapping is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (known. Cross-check the device table, stripe UUIDs and chunk root; a missing member) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (must not be treated as an all-zero device.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 4) Tj ET
 endstream
 endobj
 14 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 15 0 R >>
 endobj
 15 0 obj
-<< /Length 1284 >>
+<< /Length 1606 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Tree block headers and key layout) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(Tree blocks have 101-byte headers: checksum 0..31, FSID 32, logical bytenr) Tj
-T* (48, flags 56, chunk-tree UUID 64, generation 80, owner tree ID 88, item) Tj
-T* (count 96 and level 100. Level zero is a leaf. A packed key has 64-bit object) Tj
-T* (ID at 0, one-byte type at 8 and 64-bit offset at 9 \(17 bytes\). Compare) Tj
-T* (numerically in object/type/offset order. Internal pointer records are 33) Tj
-T* (bytes: key, child logical bytenr 17, child generation 25. Leaf item) Tj
-T* (descriptors are 25 bytes: key, data offset 17 and size 21; item offsets are) Tj
-T* (relative to the data area after the 101-byte header. Check nonoverlap of) Tj
-T* (descriptors and payloads, sorted keys, child generation, expected owner and) Tj
-T* (logical location, and metadata checksum. Tree sharing needs feature-aware) Tj
-T* (owner checks.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 5 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (4. Chunk items and worked translation) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (A chunk item value begins with logical length 0, owner 8, stripe length 16,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (profile/type flags 24, I/O align/width/sector size 32/36/40, stripe count 44 and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (sub-stripe count 46. Stripe descriptors begin at 48; each is 32 bytes: device ID 0,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (device byte offset 8, UUID 16. The chunk key's offset is the logical chunk start.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (For SINGLE, logical p maps to stripe physical offset+\(p-chunk_start\). For DUP,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (multiple offsets on the same device hold alternate copies. Example: chunk logical) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (start 1 GiB, physical start 2 GiB, logical byte 1 GiB+8192 maps to 2147491840 on) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (the declared device. RAID0/10 stripe arithmetic and RAID5/6 parity placement) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (require native profile-specific mapping; do not use the SINGLE formula. Split I/O) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (across mapping/stripe boundaries.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 5) Tj ET
 endstream
 endobj
 16 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 17 0 R >>
 endobj
 17 0 obj
-<< /Length 1296 >>
+<< /Length 1596 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Root tree and object identities) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(The root tree identifies other trees via ROOT_ITEM keys, including) Tj
-T* (filesystem/subvolume trees. Principal IDs include root 1, extent 2, chunk 3,) Tj
-T* (device 4, default filesystem 5 and checksum 7. The root item contains an) Tj
-T* (embedded inode item followed by generation, root-directory ID, tree logical) Tj
-T* (bytenr and other metadata. Root references/backreferences link subvolume) Tj
-T* (names to containing trees. The usual subvolume root directory inode is 256,) Tj
-T* (but resolve actual root metadata and default-subvolume selection. Snapshot) Tj
-T* (roots share underlying metadata and data; separate subvolumes can) Tj
-T* (legitimately reuse inode numbers. A stable handle needs tree/root identity) Tj
-T* (as well as object ID. Never combine roots from unrelated superblock) Tj
-T* (generations to synthesize a namespace.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 6 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (5. Tree block headers and key layout) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Tree blocks have 101-byte headers: checksum 0..31, FSID 32, logical bytenr 48,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (flags 56, chunk-tree UUID 64, generation 80, owner tree ID 88, item count 96 and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (level 100. Level zero is a leaf. A packed key has 64-bit object ID at 0, one-byte) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (type at 8 and 64-bit offset at 9 \(17 bytes\). Compare numerically in) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (object/type/offset order. Internal pointer records are 33 bytes: key, child logical) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (bytenr 17, child generation 25. Leaf item descriptors are 25 bytes: key, data) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (offset 17 and size 21; item offsets are relative to the data area after the) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (101-byte header. Check nonoverlap of descriptors and payloads, sorted keys, child) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (generation, expected owner and logical location, and metadata checksum. Tree) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (sharing needs feature-aware owner checks.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 6) Tj ET
 endstream
 endobj
 18 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 19 0 R >>
 endobj
 19 0 obj
-<< /Length 1271 >>
+<< /Length 1608 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Inode items and directories) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(An inode item has generation 0, transid 8, size 16, allocated-byte) Tj
-T* (accounting 24, block-group hint 32, link count 40, UID/GID 44/48, mode 52,) Tj
-T* (device 56, flags 64 and sequence 72, reserved 80..111, followed by four) Tj
-T* (12-byte timespecs \(seconds then nanoseconds\) at 112,124,136,148. Directory) Tj
-T* (items contain target key 0, transid 17, 16-bit data length 25, name length) Tj
-T* (27, type 29 and variable name/data from 30. DIR_ITEM keys use native) Tj
-T* (filename hash; DIR_INDEX keys provide ordered enumeration. Collisions can) Tj
-T* (pack multiple entries into one item. Match exact bounded names, target key) Tj
-T* (type and root identity. Inode-reference items represent links back to parent) Tj
-T* (directories; subvolume links are root references rather than ordinary inode) Tj
-T* (links.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 7 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (6. Root tree and object identities) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (The root tree identifies other trees via ROOT_ITEM keys, including) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (filesystem/subvolume trees. Principal IDs include root 1, extent 2, chunk 3, device) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (4, default filesystem 5 and checksum 7. The root item contains an embedded inode) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (item followed by generation, root-directory ID, tree logical bytenr and other) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (metadata. Root references/backreferences link subvolume names to containing trees.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (The usual subvolume root directory inode is 256, but resolve actual root metadata) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (and default-subvolume selection. Snapshot roots share underlying metadata and data;) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (separate subvolumes can legitimately reuse inode numbers. A stable handle needs) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (tree/root identity as well as object ID. Never combine roots from unrelated) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (superblock generations to synthesize a namespace.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 7) Tj ET
 endstream
 endobj
 20 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 21 0 R >>
 endobj
 21 0 obj
-<< /Length 1273 >>
+<< /Length 1583 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (File extent item layout) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(Extent-data keys use the inode object ID, EXTENT_DATA type and logical file) Tj
-T* (byte offset. The value begins generation 0, RAM bytes 8, compression 16,) Tj
-T* (encryption 17, other encoding 18 and extent type 20. Type 0 is inline and) Tj
-T* (its data begins at 21. Regular \(1\) and preallocated \(2\) values use disk) Tj
-T* (logical bytenr at 21, disk bytes 29, offset into the extent 37 and logical) Tj
-T* (byte count 45. All are little-endian. In uncompressed regular mapping, file) Tj
-T* (byte position p maps to disk_bytenr+extent_offset+\(p-key_offset\), then) Tj
-T* (through chunk translation. A zero disk bytenr or absent mapping may) Tj
-T* (represent a hole under admitted rules; preallocated extents read as zero.) Tj
-T* (Compressed extents must be decoded as units, not by direct physical byte) Tj
-T* (arithmetic.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 8 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (7. Inode items and directories) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (An inode item has generation 0, transid 8, size 16, allocated-byte accounting 24,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (block-group hint 32, link count 40, UID/GID 44/48, mode 52, device 56, flags 64 and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (sequence 72, reserved 80..111, followed by four 12-byte timespecs \(seconds then) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (nanoseconds\) at 112,124,136,148. Directory items contain target key 0, transid 17,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (16-bit data length 25, name length 27, type 29 and variable name/data from 30.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (DIR_ITEM keys use native filename hash; DIR_INDEX keys provide ordered enumeration.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (Collisions can pack multiple entries into one item. Match exact bounded names,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (target key type and root identity. Inode-reference items represent links back to) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (parent directories; subvolume links are root references rather than ordinary inode) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (links.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 8) Tj ET
 endstream
 endobj
 22 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 23 0 R >>
 endobj
 23 0 obj
-<< /Length 1335 >>
+<< /Length 1585 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Checksums, compression and repair) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(The superblock checksum type selects the native checksum algorithm,) Tj
-T* (including CRC32C, xxhash, SHA-256 or BLAKE2b depending on version. Metadata) Tj
-T* (stores the checksum in its first 32-byte area and checksums the remaining) Tj
-T* (block with native algorithm conventions. The checksum tree holds checksums) Tj
-T* (for logical data sectors, keyed by disk logical byte positions, not file) Tj
-T* (offsets; compressed extents checksum stored representation. NODATASUM data) Tj
-T* (can lack checksums by design. A failed checksum is not permission to accept) Tj
-T* (a different unvalidated copy. For DUP or mirrored profiles, validate) Tj
-T* (alternate copies and their identities before repair. Preserve compression,) Tj
-T* (checksumming and NOCOW semantics; unsupported encodings must refuse reading) Tj
-T* (or mutation rather than exposing raw encoded bytes as file data.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 9 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (8. File extent item layout) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Extent-data keys use the inode object ID, EXTENT_DATA type and logical file byte) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (offset. The value begins generation 0, RAM bytes 8, compression 16, encryption 17,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (other encoding 18 and extent type 20. Type 0 is inline and its data begins at 21.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (Regular \(1\) and preallocated \(2\) values use disk logical bytenr at 21, disk bytes) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (29, offset into the extent 37 and logical byte count 45. All are little-endian. In) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (uncompressed regular mapping, file byte position p maps to) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (disk_bytenr+extent_offset+\(p-key_offset\), then through chunk translation. A zero) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (disk bytenr or absent mapping may represent a hole under admitted rules;) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (preallocated extents read as zero. Compressed extents must be decoded as units, not) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (by direct physical byte arithmetic.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 9) Tj ET
 endstream
 endobj
 24 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 25 0 R >>
 endobj
 25 0 obj
-<< /Length 1328 >>
+<< /Length 1648 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Extent and backreference ownership) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(Extent items contain 64-bit reference count at 0, generation 8 and flags 16;) Tj
-T* (additional tree-block and inline reference records depend on the key and) Tj
-T* (extent flags. Data references can encode root ID, inode object ID, logical) Tj
-T* (offset and reference count; shared references can identify parent tree) Tj
-T* (blocks. Skinny metadata uses a separate key layout. Check declared and) Tj
-T* (reconstructed references across all live roots and snapshots before) Tj
-T* (reclamation. Block-group items, free-space tree/cache and device allocation) Tj
-T* (metadata describe different levels of allocation; none is a substitute for) Tj
-T* (the extent tree. A reflink or snapshot can legitimately refer to the same) Tj
-T* (physical extent. A file-level defrag that breaks sharing may increase) Tj
-T* (physical usage and must not silently change snapshot contents.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 10 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (9. Checksums, compression and repair) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (The superblock checksum type selects the native checksum algorithm, including) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (CRC32C, xxhash, SHA-256 or BLAKE2b depending on version. Metadata stores the) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (checksum in its first 32-byte area and checksums the remaining block with native) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (algorithm conventions. The checksum tree holds checksums for logical data sectors,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (keyed by disk logical byte positions, not file offsets; compressed extents checksum) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (stored representation. NODATASUM data can lack checksums by design. A failed) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (checksum is not permission to accept a different unvalidated copy. For DUP or) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (mirrored profiles, validate alternate copies and their identities before repair.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (Preserve compression, checksumming and NOCOW semantics; unsupported encodings must) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (refuse reading or mutation rather than exposing raw encoded bytes as file data.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 10) Tj ET
 endstream
 endobj
 26 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 27 0 R >>
 endobj
 27 0 obj
-<< /Length 1332 >>
+<< /Length 1641 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Copy-on-write publication and tree log) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(A transaction writes new payload and changed tree nodes, updates extent) Tj
-T* (ownership and checksums, then publishes consistent new root pointers and) Tj
-T* (generation through the superblock. Previous reachable versions cannot be) Tj
-T* (reused until commit and native reference/pin rules allow. The fsync tree log) Tj
-T* (can contain newer namespace/data metadata than the last full transaction;) Tj
-T* (recovery must apply only the validated log associated with the selected) Tj
-T* (superblock. A read-only forensic scan should preserve the original image and) Tj
-T* (distinguish committed roots from a log-replayed view. A clean-looking root) Tj
-T* (tree does not prove every related allocator tree or device is coherent.) Tj
-T* (Exact delayed-ref processing, tree-log replay, balance and interrupted) Tj
-T* (deletion semantics need dedicated algorithm-level tests.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 11 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (10. Extent and backreference ownership) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Extent items contain 64-bit reference count at 0, generation 8 and flags 16;) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (additional tree-block and inline reference records depend on the key and extent) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (flags. Data references can encode root ID, inode object ID, logical offset and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (reference count; shared references can identify parent tree blocks. Skinny metadata) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (uses a separate key layout. Check declared and reconstructed references across all) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (live roots and snapshots before reclamation. Block-group items, free-space) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (tree/cache and device allocation metadata describe different levels of allocation;) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (none is a substitute for the extent tree. A reflink or snapshot can legitimately) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (refer to the same physical extent. A file-level defrag that breaks sharing may) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (increase physical usage and must not silently change snapshot contents.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 11) Tj ET
 endstream
 endobj
 28 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 29 0 R >>
 endobj
 29 0 obj
-<< /Length 1557 >>
+<< /Length 1645 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Formatting, relocation and acceptance) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(A native formatter must establish device identity, system and ordinary) Tj
-T* (chunks, root/chunk/extent/device and filesystem trees, allocation metadata,) Tj
-T* (checksums, and coherent superblock copies. Defrag and balance are different) Tj
-T* (operations: rewriting a file's logical extent layout is not equivalent to) Tj
-T* (moving a physical chunk between devices. Require reserve space, copy and) Tj
-T* (verify data, publish coherent pointers/checksums/backrefs and retire old) Tj
-T* (storage under native transaction rules. Sources:) Tj
-T* (https://github.com/torvalds/linux/blob/v6.12/include/uapi/linux/btrfs_tree.h) Tj
-T* (and https://github.com/torvalds/linux/tree/v6.12/fs/btrfs . Compare) Tj
-T* (independent btrfs-progs images across node sizes, SINGLE/DUP, multiple) Tj
-T* (devices, inline/prealloc/compressed files, snapshots, reflinks, corrupted) Tj
-T* (checksums, partial transaction publication and tree-log recovery. Exact RAID) Tj
-T* (parity mapping, checksum coverage and feature-specific writer semantics) Tj
-T* (remain unqualified by this document. Historical manual follows.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 12 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (11. Copy-on-write publication and tree log) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (A transaction writes new payload and changed tree nodes, updates extent ownership) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (and checksums, then publishes consistent new root pointers and generation through) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (the superblock. Previous reachable versions cannot be reused until commit and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (native reference/pin rules allow. The fsync tree log can contain newer) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (namespace/data metadata than the last full transaction; recovery must apply only) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (the validated log associated with the selected superblock. A read-only forensic) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (scan should preserve the original image and distinguish committed roots from a) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (log-replayed view. A clean-looking root tree does not prove every related allocator) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (tree or device is coherent. Exact delayed-ref processing, tree-log replay, balance) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (and interrupted deletion semantics need dedicated algorithm-level tests.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 12) Tj ET
 endstream
 endobj
 30 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 31 0 R >>
 endobj
 31 0 obj
-<< /Length 661 >>
+<< /Length 2378 >>
 stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-1 1 1 rg BT /F2 11 Tf 50 807 Td (INFILTRATOR / FILESYSTEM ENGINEERING REFERENCE) Tj ET
-BT /F2 21 Tf 50 775 Td (Btrfs - technical reference) Tj ET
-0.05 0.13 0.22 rg BT /F2 16 Tf 50 715 Td (Historical reference appendix) Tj ET
-BT /F1 11 Tf 15 TL 50 685 Td
-(The earlier manual follows for provenance. Its implementation status and) Tj
-T* (qualification statements are historical; the new engineering chapters take) Tj
-T* (precedence for original-format interpretation.) Tj
-ET
-0.05 0.13 0.22 rg BT /F1 9 Tf 50 42 Td (Engineering chapter 13 | Original format, not provider qualification) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (12. Implementation and qualification boundary) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Historical revision 20fed85b57f8 admitted single-device SINGLE/DUP mappings,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (verified uncompressed regular data through the checksum tree including) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (partial-sector reads, and treated sparse/preallocated extents as zero. Hosted) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (FORMAT/QUERY were distinct from the freestanding reader. Active log replay, nested) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (subvolumes, compressed/encrypted extents and other device profiles were outside) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (that documented read path.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 612 Td (Common V2 is the independent provider interface:) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 598 Td (https://github.com/Infiltrator-Projects/Libraries/blob/main/docs/FILESYSTEM_COMMON_) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 584 Td (ABI_V2.md . Negotiate real operation masks and media profiles. Use bounded host) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (I/O, exclusive unmounted ownership and durable flush for mutation; distinguish) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (unsupported, corrupt, I/O and stale-handle results. Test Media and Defragmenter use) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 542 Td (the same engine. Hosted, freestanding, BOOT, kernel, recovery and package) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 528 Td (qualification are independent. Current capability and release status belongs to the) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 514 Td (repository README and exact-source qualification records; historical evidence is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 500 Td (not a current status claim.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 476 Td (Historical source or test reference:) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 462 Td (https://github.com/Infiltrator-Projects/Filesystem-Btrfs/actions/runs/45520083239 .) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 13) Tj ET
 endstream
 endobj
 32 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 33 0 R >>
 endobj
 33 0 obj
-<< /Length 2762 >>
+<< /Length 1966 >>
 stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 01) Tj ET
-BT /F2 12 Tf 0.02 0.50 0.56 rg 1 0 0 1 50 690.0 Tm (HISTORY / ORIGINAL DESIGN / DISK FORMAT) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 655.0 Tm (A Linux-native, checksummed, copy-on-write filesystem with subvolumes, snapshots and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 638.0 Tm (integrated multi-device logical-to-physical mapping.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 609.0 Tm (This is a technical reference to the upstream filesystem's historical design, not an) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 592.0 Tm (installer manual. The format's on-media semantics are distinct from the independent) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 575.0 Tm (InfiltratorOS module, its APIs and any Linux kernel adapter.) Tj ET
-BT /F2 12 Tf 0.02 0.50 0.56 rg 1 0 0 1 50 546.0 Tm (CONCEPTUAL MEDIA MAP) Tj ET
-0.040 0.360 0.470 rg 50 463 239 67 re f
-BT /F2 11 Tf 1 1 1 rg 1 0 0 1 61 495.0 Tm (SUPERBLOCK) Tj ET
-BT /F1 8.5 Tf 0.86 0.96 0.97 rg 1 0 0 1 61 476.0 Tm (Root/chunk pointers + generation) Tj ET
-0.065 0.395 0.495 rg 301 463 239 67 re f
-BT /F2 11 Tf 1 1 1 rg 1 0 0 1 312 495.0 Tm (B-TREE FOREST) Tj ET
-BT /F1 8.5 Tf 0.86 0.96 0.97 rg 1 0 0 1 312 476.0 Tm (Root, extent, checksum trees) Tj ET
-0.090 0.430 0.520 rg 50 381 239 67 re f
-BT /F2 11 Tf 1 1 1 rg 1 0 0 1 61 413.0 Tm (CHUNK MAPPING) Tj ET
-BT /F1 8.5 Tf 0.86 0.96 0.97 rg 1 0 0 1 61 394.0 Tm (Logical to device stripes) Tj ET
-0.115 0.465 0.545 rg 301 381 239 67 re f
-BT /F2 11 Tf 1 1 1 rg 1 0 0 1 312 413.0 Tm (DATA EXTENTS) Tj ET
-BT /F1 8.5 Tf 0.86 0.96 0.97 rg 1 0 0 1 312 394.0 Tm (Shared, compressed or replicated) Tj ET
-BT /F2 12 Tf 0.02 0.50 0.56 rg 1 0 0 1 50 340.0 Tm (CONTENTS) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 313.0 Tm (1. Historical chronology) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 290.0 Tm (2. Original on-disk architecture) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 267.0 Tm (3. Allocation and directories) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 244.0 Tm (4. Integrity and recovery) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 221.0 Tm (5. Design rationale and limitations) Tj ET
-BT /F1 10.6 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 198.0 Tm (6. InfiltratorOS integration boundary) Tj ET
-endstream
-endobj
-34 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 35 0 R >>
-endobj
-35 0 obj
-<< /Length 1922 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 02) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (HISTORICAL CHRONOLOGY) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (Oracle Linux developer Chris Mason began Btrfs development in 2007 as an advanced Linux) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (filesystem with copy-on-write, checksums, snapshots and integrated volume management.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (Oracle's project history records his June 2007 public announcement, and the implementation) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (reached Linux mainline in the 2.6.29 cycle in 2009. The design addressed growing server) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 611.0 Tm (storage complexity and features that simple journalling inode filesystems did not provide.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 582.0 Tm (Btrfs evolved through widespread Linux contributions, new profiles, device replacement,) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (send/receive and scrub facilities. Its implementation and recommended deployment profiles) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 548.0 Tm (have changed considerably over time. Historical development claims should be separated from) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 531.0 Tm (the state of a particular released kernel and userspace toolset.) Tj ET
-endstream
-endobj
-36 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 37 0 R >>
-endobj
-37 0 obj
-<< /Length 2137 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 03) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (ORIGINAL ON-DISK ARCHITECTURE) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (The Btrfs primary superblock is at physical offset 64 KiB, with additional mirrors at) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (specified offsets when the device is large enough. The superblock includes generation and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (pointers into a forest of B-trees. Important trees record filesystem roots, inodes and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (directory entries, extents, checksums, devices and chunk mappings. The format is) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 611.0 Tm (transactional copy-on-write, so new tree versions are written rather than editing live) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 594.0 Tm (ancestors in place.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (Logical addresses are mapped through chunk structures to one or more physical devices and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 548.0 Tm (stripes. File extents and metadata blocks are not necessarily adjacent, and physical device) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 531.0 Tm (addressing is not identical to the filesystem logical address space. Checksums are stored) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 514.0 Tm (separately from the corresponding data in checksum trees. A parser must validate block) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 497.0 Tm (headers, expected owner IDs and generation numbers.) Tj ET
-endstream
-endobj
-38 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 39 0 R >>
-endobj
-39 0 obj
-<< /Length 2036 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 04) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (ALLOCATION AND DIRECTORIES) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (Space is managed through extent allocation and back-references rather than a FAT.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (Copy-on-write and reflinks permit multiple logical file references to share existing data) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (extents. Subvolumes have separate filesystem roots and can be snapshotted; snapshots hold) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (references to retained trees instead of copying an entire device. A changed shared extent) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 611.0 Tm (may require allocating new data, metadata updates and later reference-count cleanup.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 582.0 Tm (Inode items, directory items and directory index items belong to keyed trees. Lookup and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (enumeration must respect tree order and explicit keys. Compression is applied at extent) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 548.0 Tm (boundaries and demands length and algorithm checks. Storage profiles such as single, DUP,) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 531.0 Tm (RAID1 and RAID10 change placement and redundancy rules; they must not be inferred from the) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 514.0 Tm (number of block devices alone.) Tj ET
-endstream
-endobj
-40 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 41 0 R >>
-endobj
-41 0 obj
-<< /Length 1980 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 05) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (INTEGRITY AND RECOVERY) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (Btrfs checksums file data and metadata where applicable. Tree transactions commit through) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (updated roots and superblock generation, so an interrupted operation may leave earlier) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (committed roots valid. Scrub detects checksum mismatches and can repair damaged blocks if) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (redundancy supplies another valid copy. Checksums without redundant storage detect) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 611.0 Tm (corruption but cannot necessarily correct it.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 582.0 Tm (Recovery requires checking generation, tree ownership, chunk mapping and device UUID) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (identity. It is unsafe to rewrite trees from one superblock generation while using) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 548.0 Tm (allocation state from another. RAID-related recovery and reshape operations involve complex) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 531.0 Tm (profile-specific rules. Metadata consistency, data checksum errors and application) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 514.0 Tm (durability are distinct questions.) Tj ET
-endstream
-endobj
-42 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 43 0 R >>
-endobj
-43 0 obj
-<< /Length 1773 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 06) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (DESIGN RATIONALE AND LIMITATIONS) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (Btrfs combines filesystem and volume-management concerns to support flexible multi-device) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (storage and inexpensive snapshots. This adds tree and reference bookkeeping, potential) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (write amplification under random updates, and fragmentation of copy-on-write workloads.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (Full devices leave less working space for metadata updates and relocations.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 599.0 Tm (Feature flags, compression algorithms, free-space-tree revisions and supported redundancy) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 582.0 Tm (modes depend on the kernel and toolset. An implementation that reads basic trees does not) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (automatically support scrub, rebuild, RAID maintenance or crash-recoverable writable) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 548.0 Tm (mounts. Defragmentation may break extent sharing and increase storage use.) Tj ET
-endstream
-endobj
-44 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 45 0 R >>
-endobj
-45 0 obj
-<< /Length 1586 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 07) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (INFILTRATOROS INTEGRATION BOUNDARY) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (BTRFS.so is a consumer module, not an upstream Linux Btrfs kernel replacement. Its) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (advertised features should be restricted to verified parsing, analysis, writing and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (recovery operations. The user should be able to distinguish data checksum validation from) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (metadata traversal and from device-level redundancy.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 599.0 Tm (The authoritative Btrfs on-disk specification controls superblock copies, tree block) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 582.0 Tm (headers, key semantics, chunk mapping and generation checks. Publishing a PDF or validating) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 565.0 Tm (an ELF module does not establish multi-device write qualification.) Tj ET
-endstream
-endobj
-46 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 47 0 R >>
-endobj
-47 0 obj
-<< /Length 2235 >>
-stream
-0.06 0.13 0.22 rg 0 750 595 92 re f
-0.03 0.53 0.58 rg 50 747 120 4 re f
-0.7 0.8 0.85 RG 0.7 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.60 0.85 0.90 rg 1 0 0 1 50 803.0 Tm (INFILTRATOR / ORIGINAL FILESYSTEM TECHNICAL REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 774.0 Tm (Btrfs - copy-on-write B-tree filesystem) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 50 34.0 Tm (Filesystem-Btrfs | Format history, physical design and references) Tj ET
-BT /F1 8 Tf 0.33 0.40 0.44 rg 1 0 0 1 509 34.0 Tm (PAGE 08) Tj ET
-BT /F2 14 Tf 0.01 0.43 0.49 rg 1 0 0 1 50 713.0 Tm (SOURCES AND PRIMARY REFERENCES) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 679.0 Tm (The documents below are the historical and engineering reference points used for this) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 662.0 Tm (guide. Where an on-media field or feature flag is ambiguous, consult the original format) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 645.0 Tm (documentation and its version-specific implementation notes before interpreting or changing) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 628.0 Tm (media.) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 599.0 Tm (1. Btrfs official on-disk format reference) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 570.0 Tm (https://btrfs.readthedocs.io/en/latest/dev/On-disk-format.html) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 541.0 Tm (2. Btrfs historical contributions and merge chronology) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 512.0 Tm (https://btrfs.readthedocs.io/en/latest/Contributors.html) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 483.0 Tm (3. Oracle open-source Btrfs project history) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 454.0 Tm (https://opensource.oracle.com/ossh.html) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 425.0 Tm (The InfiltratorOS shared-object module, optional kernel adapter, native builder and) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 408.0 Tm (release-specific tests are a separate implementation. A successful document build or) Tj ET
-BT /F1 10.15 Tf 0.08 0.15 0.24 rg 1 0 0 1 50 391.0 Tm (package installation does not qualify physical writes, recovery, kernel mounting or boot.) Tj ET
-endstream
-endobj
-48 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 49 0 R >>
-endobj
-49 0 obj
-<< /Length 2714 >>
-stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-0.75 0.82 0.85 RG .7 w 50 49 m 545 49 l S
-BT /F2 9 Tf 0.62 0.88 0.91 rg 1 0 0 1 50 800 Tm (INFILTRATOR / ORIGINAL FILESYSTEM ENGINEERING APPENDIX) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 770 Tm (Btrfs / engineering detail) Tj ET
-BT /F1 8 Tf 0.3 0.39 0.42 rg 1 0 0 1 50 34 Tm (Original format research; consult primary references for normative fields) Tj ET
-BT /F1 8 Tf 0.3 0.39 0.42 rg 1 0 0 1 509 34 Tm (PAGE 09) Tj ET
-BT /F2 13.5 Tf 0.02 0.44 0.50 rg 1 0 0 1 50 710 Tm (DISK READ PATH / ENGINEERING NOTES) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 678 Tm (1. Start with the primary superblock at 64 KiB and validate its magic, checksum,) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 661.5 Tm (generation and root pointers. Optional mirrors may exist at later device offsets.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 635 Tm (2. Use system chunk mappings to bootstrap logical-to-physical addressing. A logical Btrfs) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 618.5 Tm (address is not necessarily the same as a byte offset on one disk.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 592 Tm (3. Read the root tree and chunk tree before interpreting individual filesystem trees;) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 575.5 Tm (object IDs, item types and offsets form ordered B-tree keys.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 549 Tm (4. Follow the extent tree to understand allocated extents and references. Several files,) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 532.5 Tm (snapshots or subvolumes can legitimately refer to shared data.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 506 Tm (5. Resolve a pathname through the appropriate subvolume tree, inode items, directory) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 489.5 Tm (items and file extent items rather than a single universal inode table.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 463 Tm (6. Validate checksums and copy-on-write generations for tree blocks. A valid-looking) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 446.5 Tm (block from an old generation may not belong to the chosen root.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 420 Tm (7. Interpret data and metadata block-group profiles separately, including single,) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 403.5 Tm (duplicated, mirrored and parity-based storage policies.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 377 Tm (8. Distinguish compressed extents, holes, inline data and regular extents; the logical) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 360.5 Tm (file size is not necessarily the stored byte count.) Tj ET
-endstream
-endobj
-50 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 51 0 R >>
-endobj
-51 0 obj
-<< /Length 2606 >>
-stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.01 0.52 0.56 rg 50 747 116 5 re f
-0.75 0.82 0.85 RG .7 w 50 49 m 545 49 l S
-BT /F2 9 Tf 0.62 0.88 0.91 rg 1 0 0 1 50 800 Tm (INFILTRATOR / ORIGINAL FILESYSTEM ENGINEERING APPENDIX) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 770 Tm (Btrfs / engineering detail) Tj ET
-BT /F1 8 Tf 0.3 0.39 0.42 rg 1 0 0 1 50 34 Tm (Original format research; consult primary references for normative fields) Tj ET
-BT /F1 8 Tf 0.3 0.39 0.42 rg 1 0 0 1 509 34 Tm (PAGE 10) Tj ET
-BT /F2 13.5 Tf 0.02 0.44 0.50 rg 1 0 0 1 50 710 Tm (VALIDATION, RECOVERY AND COMPATIBILITY) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 678 Tm (1. Choose a consistent root generation before walking trees. Mixing different committed) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 661.5 Tm (generations can create a contradictory namespace and free-space view.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 635 Tm (2. Validate chunk-to-device mappings and device identities; the correct logical extent) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 618.5 Tm (may have several physical copies or stripes.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 592 Tm (3. Check node key ordering, child generations, backreferences and extent reference counts) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 575.5 Tm (before treating an extent as free.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 549 Tm (4. An ordinary Btrfs data checksum protects a recorded extent, not necessarily all) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 532.5 Tm (possible metadata damage or uncommitted writes.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 506 Tm (5. Do not assume snapshots duplicate data blocks. Copy-on-write and backreferences allow) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 489.5 Tm (shared extents until a modification requires divergence.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 463 Tm (6. Treat a missing device, a failed mirror and a parity profile as different recovery) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 446.5 Tm (conditions. Readability of one tree does not prove redundancy is healthy.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 420 Tm (7. Unknown incompatibility flags and newer tree features must prevent unsafe writes from) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 403.5 Tm (older implementations.) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 377 Tm (8. Separate a readonly rescue or scrub operation from metadata repair; each has different) Tj ET
-BT /F1 10 Tf 0.09 0.16 0.24 rg 1 0 0 1 55 360.5 Tm (effects on the surviving evidence.) Tj ET
-endstream
-endobj
-52 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 53 0 R >>
-endobj
-53 0 obj
-<< /Length 2792 >>
-stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.04 0.54 0.60 rg 50 747 115 4 re f
-0.78 0.82 0.86 RG 0.6 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.62 0.86 0.90 rg 1 0 0 1 50 801 Tm (INFILTRATOR / IMPLEMENTATION REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 771 Tm (Btrfs / Common V2 provider) Tj ET
-BT /F1 8 Tf 0.34 0.40 0.44 rg 1 0 0 1 50 34 Tm (Implementation appendix / source revision 20fed85b57f8) Tj ET
-BT /F1 8 Tf 0.34 0.40 0.44 rg 1 0 0 1 505 34 Tm (PAGE 11) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 710 Tm (1. PURPOSE AND FORMAT SCOPE) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 686 Tm (Btrfs, with native copy-on-write tree structures. This repository owns the) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 671 Tm (format-specific implementation of BTRFS.so for InfiltratorOS.) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 641 Tm (2. ON-DISK ARCHITECTURE AND INVARIANTS) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 617 Tm (Superblocks, chunk mappings and B-trees describe logical addresses and) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 602 Tm (allocation; the reader validates tree identity, generation, key ordering,) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 587 Tm (lengths and CRC32C, rejecting impossible root and log tree levels.) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 572 Tm (Single-device SINGLE and DUP mappings are supported by the documented) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 557 Tm (reader. Inline data is protected by leaf checksums; regular uncompressed) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 542 Tm (data is verified through the checksum tree, including partial-sector) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 527 Tm (reads. Sparse and preallocated extents read as zeroes.) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 497 Tm (3. COMMON V2 IMPLEMENTATION AND CAPABILITIES) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 473 Tm (Hosted and freestanding namespace reader exposes probe, mount, stat,) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 458 Tm (enumeration and read. The hosted VOLUME descriptor also declares FORMAT) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 443 Tm (and QUERY; check the actual masks and qualification for each profile. The) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 428 Tm (canonical entry point is infiltrator_filesystem_api_v2. Consumers must) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 413 Tm (negotiate the actual profile and operation masks and use bounded,) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 398 Tm (partition-relative host I/O. A source-level callback does not by itself) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 383 Tm (establish that every format variant or host profile is qualified.) Tj ET
-endstream
-endobj
-54 0 obj
-<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 55 0 R >>
-endobj
-55 0 obj
-<< /Length 3764 >>
-stream
-0.05 0.13 0.22 rg 0 749 595 93 re f
-0.04 0.54 0.60 rg 50 747 115 4 re f
-0.78 0.82 0.86 RG 0.6 w 50 50 m 545 50 l S
-BT /F2 9 Tf 0.62 0.86 0.90 rg 1 0 0 1 50 801 Tm (INFILTRATOR / IMPLEMENTATION REFERENCE) Tj ET
-BT /F2 19 Tf 1 1 1 rg 1 0 0 1 50 771 Tm (Btrfs / Common V2 provider) Tj ET
-BT /F1 8 Tf 0.34 0.40 0.44 rg 1 0 0 1 50 34 Tm (Implementation appendix / source revision 20fed85b57f8) Tj ET
-BT /F1 8 Tf 0.34 0.40 0.44 rg 1 0 0 1 505 34 Tm (PAGE 12) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 710 Tm (4. INTEGRITY, MUTATION, ALLOCATION AND RECOVERY) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 686 Tm (Active log replay, nested subvolume traversal, compressed or encrypted) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 671 Tm (extents, unchecked regular data and other device profiles are outside the) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 656 Tm (documented read path. Native formatting does not imply arbitrary writable) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 641 Tm (subvolume or defragmentation support. For destructive operations, require) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 626 Tm (the applicable exclusive writable host, durability contract and) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 611 Tm (format-specific validation. Never silently substitute a kernel or FUSE) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 596 Tm (driver or treat a rejected or unavailable operation as success. Preserve) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 581 Tm (original disk-format semantics; relocation and recovery are separate from) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 566 Tm (ordinary file I/O.) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 536 Tm (5. BUILD, INSTALLATION AND RELEASE) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 512 Tm (The target installation is /System/Filesystems/BTRFS.so and) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 497 Tm (/System/Resources/Documentation/Filesystem-Btrfs.pdf. The project release) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 482 Tm (policy is a portable amd64 DEB and a CPU-native source-first RUN, with) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 467 Tm (GitHub's automatic source archive; do not treat this policy statement as) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 452 Tm (verification of the current installer payload. The release workflow is the) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 437 Tm (authoritative executable build and package specification. Historical) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 422 Tm (adapters and test artifacts are not additional production filesystem) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 407 Tm (authorities.) Tj ET
-BT /F2 13 Tf 0.02 0.45 0.50 rg 1 0 0 1 50 377 Tm (6. QUALIFICATION AND LIMITATIONS) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 353 Tm (Recorded qualification workflow) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 338 Tm (\(https://github.com/Infiltrator-Projects/Filesystem-Btrfs/actions/runs/455) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 323 Tm (20083239\) | Current workflows) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 308 Tm (\(https://github.com/Infiltrator-Projects/Filesystem-Btrfs/actions?query=br) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 293 Tm (anch%3Amain\). A successful workflow establishes the tested scope only, not) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 278 Tm (complete original-format parity, physical-media crash safety, or) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 263 Tm (production BOOT/kernel integration. Use disposable images for destructive) Tj ET
-BT /F1 10.2 Tf 0.07 0.16 0.23 rg 1 0 0 1 50 248 Tm (qualification.) Tj ET
+0.06 0.15 0.23 rg 0 768 595 74 re f
+1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
+BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
+0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (13. Formatting, relocation and acceptance) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (A native formatter must establish device identity, system and ordinary chunks,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (root/chunk/extent/device and filesystem trees, allocation metadata, checksums, and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (coherent superblock copies. Defrag and balance are different operations: rewriting) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (a file's logical extent layout is not equivalent to moving a physical chunk between) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (devices. Require reserve space, copy and verify data, publish coherent) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (pointers/checksums/backrefs and retire old storage under native transaction rules.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (Sources:) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (https://github.com/torvalds/linux/blob/v6.12/include/uapi/linux/btrfs_tree.h and) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (https://github.com/torvalds/linux/tree/v6.12/fs/btrfs . Compare independent) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 580 Td (btrfs-progs images across node sizes, SINGLE/DUP, multiple devices,) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 566 Td (inline/prealloc/compressed files, snapshots, reflinks, corrupted checksums, partial) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 552 Td (transaction publication and tree-log recovery. Exact RAID parity mapping, checksum) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 538 Td (coverage and feature-specific writer semantics remain unqualified by this document.) Tj ET
+0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 14) Tj ET
 endstream
 endobj
 xref
-0 56
+0 34
 0000000000 65535 f 
 0000000009 00000 n 
 0000000058 00000 n 
-0000000283 00000 n 
-0000000353 00000 n 
-0000000428 00000 n 
-0000000496 00000 n 
-0000000642 00000 n 
-0000001863 00000 n 
-0000002009 00000 n 
-0000003328 00000 n 
-0000003476 00000 n 
-0000004738 00000 n 
-0000004886 00000 n 
-0000006232 00000 n 
-0000006380 00000 n 
-0000007716 00000 n 
-0000007864 00000 n 
-0000009212 00000 n 
+0000000206 00000 n 
+0000000276 00000 n 
+0000000351 00000 n 
+0000000419 00000 n 
+0000000565 00000 n 
+0000002062 00000 n 
+0000002208 00000 n 
+0000004085 00000 n 
+0000004233 00000 n 
+0000005873 00000 n 
+0000006021 00000 n 
+0000007554 00000 n 
+0000007702 00000 n 
 0000009360 00000 n 
-0000010683 00000 n 
-0000010831 00000 n 
-0000012156 00000 n 
-0000012304 00000 n 
-0000013691 00000 n 
-0000013839 00000 n 
-0000015219 00000 n 
-0000015367 00000 n 
-0000016751 00000 n 
-0000016899 00000 n 
-0000018508 00000 n 
-0000018656 00000 n 
-0000019368 00000 n 
-0000019516 00000 n 
-0000022330 00000 n 
-0000022478 00000 n 
-0000024452 00000 n 
-0000024600 00000 n 
-0000026789 00000 n 
-0000026937 00000 n 
-0000029025 00000 n 
-0000029173 00000 n 
-0000031205 00000 n 
-0000031353 00000 n 
-0000033178 00000 n 
-0000033326 00000 n 
-0000034964 00000 n 
-0000035112 00000 n 
-0000037399 00000 n 
-0000037547 00000 n 
-0000040313 00000 n 
-0000040461 00000 n 
-0000043119 00000 n 
-0000043267 00000 n 
-0000046111 00000 n 
-0000046259 00000 n 
+0000009508 00000 n 
+0000011156 00000 n 
+0000011304 00000 n 
+0000012964 00000 n 
+0000013112 00000 n 
+0000014747 00000 n 
+0000014895 00000 n 
+0000016532 00000 n 
+0000016680 00000 n 
+0000018380 00000 n 
+0000018528 00000 n 
+0000020221 00000 n 
+0000020369 00000 n 
+0000022066 00000 n 
+0000022214 00000 n 
+0000024644 00000 n 
+0000024792 00000 n 
 trailer
-<< /Size 56 /Root 1 0 R >>
+<< /Size 34 /Root 1 0 R >>
 startxref
-50075
+26810
 %%EOF
