@@ -22,18 +22,17 @@ BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
 1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
 BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
 0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (1. History and architecture) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It uses) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (checksummed copy-on-write B-trees, logical address spaces mapped to physical) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (devices, shared extents, subvolumes and snapshots. This reference is pinned to) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (Linux v6.12's on-disk definitions. A logical tree block address is not directly a) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (device byte offset, and a file's inode identity is scoped to its subvolume tree.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (Allocation and ownership depend on the extent/backreference trees rather than) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (directory reachability alone. Single-device SINGLE/DUP profiles are distinct from) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (RAID layouts; unsupported feature and device combinations must not be silently) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (approximated.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (The design addressed server storage complexity through integrated volume management) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (and checksums rather than a conventional journal alone. Profile compatibility and) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 542 Td (operational limits have changed over time; inspect the actual features.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (uses checksummed copy-on-write B-trees, logical address spaces mapped to) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (physical devices, shared extents, subvolumes and snapshots. This reference is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (pinned to Linux v6.12's on-disk definitions. A logical tree block address is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (not directly a device byte offset, and a file's inode identity is scoped to its) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (subvolume tree. Allocation and ownership depend on the extent/backreference) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (trees rather than directory reachability alone. Single-device SINGLE/DUP) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (profiles are distinct from RAID layouts; unsupported feature and device) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (combinations must not be silently approximated.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (The design addressed server storage complexity through integrated volume) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (management rather than a conventional journal alone.) Tj ET
 0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 2) Tj ET
 
 %%Page

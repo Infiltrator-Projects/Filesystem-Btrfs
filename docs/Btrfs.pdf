@@ -44,24 +44,23 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<< /Length 1826 >>
+<< /Length 1665 >>
 stream
 0.06 0.15 0.23 rg 0 768 595 74 re f
 1 1 1 rg BT /F2 10 Tf 43 811 Td (INFILTRATOR / FILESYSTEM ENGINEERING) Tj ET
 BT /F2 22 Tf 43 784 Td (Btrfs - technical reference) Tj ET
 0.08 0.14 0.20 rg BT /F2 15 Tf 43 736 Td (1. History and architecture) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It uses) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (checksummed copy-on-write B-trees, logical address spaces mapped to physical) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (devices, shared extents, subvolumes and snapshots. This reference is pinned to) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (Linux v6.12's on-disk definitions. A logical tree block address is not directly a) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (device byte offset, and a file's inode identity is scoped to its subvolume tree.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (Allocation and ownership depend on the extent/backreference trees rather than) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (directory reachability alone. Single-device SINGLE/DUP profiles are distinct from) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (RAID layouts; unsupported feature and device combinations must not be silently) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (approximated.) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (The design addressed server storage complexity through integrated volume management) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (and checksums rather than a conventional journal alone. Profile compatibility and) Tj ET
-0.08 0.14 0.20 rg BT /F3 10 Tf 43 542 Td (operational limits have changed over time; inspect the actual features.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 706 Td (Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 692 Td (uses checksummed copy-on-write B-trees, logical address spaces mapped to) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 678 Td (physical devices, shared extents, subvolumes and snapshots. This reference is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 664 Td (pinned to Linux v6.12's on-disk definitions. A logical tree block address is) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 650 Td (not directly a device byte offset, and a file's inode identity is scoped to its) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 636 Td (subvolume tree. Allocation and ownership depend on the extent/backreference) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 622 Td (trees rather than directory reachability alone. Single-device SINGLE/DUP) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 608 Td (profiles are distinct from RAID layouts; unsupported feature and device) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 594 Td (combinations must not be silently approximated.) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 570 Td (The design addressed server storage complexity through integrated volume) Tj ET
+0.08 0.14 0.20 rg BT /F3 10 Tf 43 556 Td (management rather than a conventional journal alone.) Tj ET
 0.2 0.3 0.4 rg BT /F1 9 Tf 43 32 Td (Historical development and engineering reference | 2) Tj ET
 endstream
 endobj
@@ -362,32 +361,32 @@ xref
 0000000565 00000 n 
 0000002062 00000 n 
 0000002208 00000 n 
-0000004085 00000 n 
-0000004233 00000 n 
-0000005873 00000 n 
-0000006021 00000 n 
-0000007554 00000 n 
-0000007702 00000 n 
-0000009360 00000 n 
-0000009508 00000 n 
-0000011156 00000 n 
-0000011304 00000 n 
-0000012964 00000 n 
-0000013112 00000 n 
-0000014747 00000 n 
-0000014895 00000 n 
-0000016532 00000 n 
-0000016680 00000 n 
-0000018380 00000 n 
-0000018528 00000 n 
-0000020221 00000 n 
-0000020369 00000 n 
-0000022066 00000 n 
-0000022214 00000 n 
-0000024644 00000 n 
-0000024792 00000 n 
+0000003924 00000 n 
+0000004072 00000 n 
+0000005712 00000 n 
+0000005860 00000 n 
+0000007393 00000 n 
+0000007541 00000 n 
+0000009199 00000 n 
+0000009347 00000 n 
+0000010995 00000 n 
+0000011143 00000 n 
+0000012803 00000 n 
+0000012951 00000 n 
+0000014586 00000 n 
+0000014734 00000 n 
+0000016371 00000 n 
+0000016519 00000 n 
+0000018219 00000 n 
+0000018367 00000 n 
+0000020060 00000 n 
+0000020208 00000 n 
+0000021905 00000 n 
+0000022053 00000 n 
+0000024483 00000 n 
+0000024631 00000 n 
 trailer
 << /Size 34 /Root 1 0 R >>
 startxref
-26810
+26649
 %%EOF

@@ -4,7 +4,7 @@
 
 Btrfs began at Oracle in 2007 under Chris Mason and entered Linux 2.6.29. It uses checksummed copy-on-write B-trees, logical address spaces mapped to physical devices, shared extents, subvolumes and snapshots. This reference is pinned to Linux v6.12's on-disk definitions. A logical tree block address is not directly a device byte offset, and a file's inode identity is scoped to its subvolume tree. Allocation and ownership depend on the extent/backreference trees rather than directory reachability alone. Single-device SINGLE/DUP profiles are distinct from RAID layouts; unsupported feature and device combinations must not be silently approximated.
 
-The design addressed server storage complexity through integrated volume management and checksums rather than a conventional journal alone. Profile compatibility and operational limits have changed over time; inspect the actual features.
+The design addressed server storage complexity through integrated volume management rather than a conventional journal alone.
 
 ## Superblock replicas and fixed fields
 
